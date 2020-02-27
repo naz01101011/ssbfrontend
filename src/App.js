@@ -1,15 +1,22 @@
 import React from 'react';
-// import './App.css';
-import HomepageImage from './components/HomepageImage';
+import {BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
 import AppHeader from './components/AppHeader';
-import LatestNews from './components/LatestNews';
+import Home from './components/Home';
+import Contact from './components/Contact'
+import Article from './components/Article';
 
 function App() {
   return (
-    <div className="wrapper" style={{textAlign: 'center'}}>
+    <Router>
+    <div className="wrapper">
       <AppHeader />
-      <LatestNews />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/contact" component={Contact} />
+        <Route path="/:article_slug" component={Article} />
+      </Switch>
     </div>
+    </Router>
   );
 }
 

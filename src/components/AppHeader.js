@@ -1,10 +1,25 @@
 import React from 'react';
-import styles from './AppHeader.module.css'
+import {Link} from 'react-router-dom';
 
-function AppHeader() {
+
+const AppHeader = (props) => {
     return (
-        <header className={styles.root}>
-            <h1>Stiri de Sibiu</h1>
+        <header>
+            <div className='container'>
+                <nav>
+                    <div className="nav-wrapper pink darken-4">
+                        <a className="brand-logo left">SSB</a>
+                        <ul id="nav-mobile" className="right">
+                            <li>
+                                <Link  to='/' >Stiri</Link>
+                            </li>
+                            <li>
+                                <Link to='/contact'>Contact</Link>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
         </header>   
     );
 }
