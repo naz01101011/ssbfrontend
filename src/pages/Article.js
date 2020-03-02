@@ -1,25 +1,33 @@
 import React, {useEffect, useState} from 'react';
-import Axios from 'axios';
+import Client from '../components/Client'
 import SerializeText from '../serializers/SerializeText'
+import SerializeDate from '../serializers/SerializeDate'
+import urlFor from '../components/ImgBuilder'
 
 const Article = (props) => {
     const [hasError, setHasError] = useState(false);
-    const [slug, setSlug] = useState('');
     const [body, setBody] = useState('');
     const [id, setId] = useState('');
     const [title, setTitle] = useState('');
+    const [date, setDate] = useState('');
+    const [cat, setCat] = useState('');
+    const [img, setImg] = useState({});
     const [loaded, setLoaded] = useState(false);
 
-    const API = 'https://w58sh5v7.apicdn.sanity.io/v1/data/query/production?query=';
-
     const fetchData = (q) => {
-      Axios.get(API + q)
+        let slug = props.match.params.article_slug
+        let query = '*[slug.current == "' + slug + '"]{ _id, title, mainImage, publishedAt, "categ": categories[0]->title, body}';
+
+        Client.fetch(query)
         .then(res => {
-            // console.log(res);
+            // console.log(res[0]);
             // setBody(res.data.result);
-            setTitle(res.data.result[0].title)
-            setBody(res.data.result[0].body)
-            setId(res.data.result[0]._id)
+            setTitle(res[0].title)
+            setBody(res[0].body)
+            setId(res[0]._id)
+            setDate(SerializeDate(res[0].publishedAt))
+            setCat(res[0].categ)
+            setImg(res[0].mainImage)
             setLoaded(true);
         })
         .catch(err => {
@@ -29,15 +37,8 @@ const Article = (props) => {
         })
     }
 
-    const handleArticle = () => {
-        let slug = props.match.params.article_slug
-        setSlug(slug);
-        let query = '*[slug.current == "' + slug + '"]';
-        fetchData(query);
-    }
-
     useEffect(() => {
-        handleArticle();    
+        fetchData();    
     }, [])
 
     if (hasError) {
@@ -52,6 +53,9 @@ const Article = (props) => {
                 {loaded ? (
                     <div>  
                         <h3>{title}</h3>
+                        <img src={urlFor(img).width(500).quality(30).url()} />
+                        <span>{date}</span>
+                        <span>{cat}</span>
                         <SerializeText body={body} id={id} />
                     </div>
                 ) : <h3>Aduc Stirea...</h3>}

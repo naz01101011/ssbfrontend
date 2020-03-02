@@ -1,21 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import Axios from 'axios';
-import LatestNews from './LatestNews';
+import LatestNews from '../components/LatestNews';
+import Client from '../components/Client'
 
 const Home = () => {
-    const API = 'https://w58sh5v7.apicdn.sanity.io/v1/data/query/production?query=';
-    const query = '*[_type == "post"] | order(_createdAt desc) { _id, title, "categ": categories[0]->title, "slug": slug.current }[0...20]';
+    const query = '*[_type == "post"] | order(publishedAt desc) { _id, title, mainImage, publishedAt, "categ": categories[0]->title, "slug": slug.current }[0...20]';
 
     const [initNews, setInitNews] = useState([]);
     const [loaded, setLoaded] = useState(false);
 
     const fetchData = () => {
-      Axios.get(API + query)
-        .then(res => {
-            // console.log(res.data.result);
-            setInitNews(res.data.result);
-            setLoaded(true);
-        })
+        Client.fetch(query)
+            .then(res => {
+                // console.log(res);
+                setInitNews(res);
+                setLoaded(true);
+            })
     }
 
     // console.log(initNews)

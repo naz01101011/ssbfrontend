@@ -1,9 +1,9 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route, } from 'react-router-dom';
 import AppHeader from './components/AppHeader';
-import Home from './components/Home';
-import Contact from './components/Contact'
-import Article from './components/Article';
+import Home from './pages/Home';
+import Contact from './pages/Contact'
+import Article from './pages/Article';
 
 function App() {
   return (

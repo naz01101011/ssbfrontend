@@ -17,13 +17,14 @@ a:hover {
   color: inherit !important;
 }
 
-.newslistitem a {
+.newslistitem a,
+.mainarticle a {
   color: #333 !important;
 }
 
-.newslistitem:first-child a div div h4 {
+/* .newslistitem:first-child a div div h4 {
   font-weight: bold;
-}
+} */
 
 .newslistitem .card:hover{
   box-shadow: 0px 2px 8px 0px #555 !important;
