@@ -8,14 +8,12 @@ import Article from './pages/Article';
 function App() {
   return (
     <Router>
-    <div className="wrapper">
       <AppHeader />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/contact" component={Contact} />
         <Route path="/:article_slug" component={Article} />
       </Switch>
-    </div>
     </Router>
   );
 }

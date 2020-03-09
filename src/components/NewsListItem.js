@@ -10,18 +10,23 @@ const NewsListItem = (props) => {
         <li className='newslistitem'>
             
             <Link to={'/' + props.slug}>
-                <div className='card'>
-                    <div className='card-content'>
-                        <img src={urlFor(props.image).width(200).url()} />
-                        <span>{SerializeDate(props.date)}</span>
-                        <span>{props.cat}</span>
-                        <h4 className='left-align'>{props.title}</h4>
+                <div className='section'>
+                    <div className='row valign-wrapper'>
+                        <div className='col s2'>
+                            <img className='responsive-img' src={urlFor(props.image).height(130).quality(30).url()} />
+                        </div>
+                        <div className='col s10'>
+                            <span>{SerializeDate(props.date)}</span>
+                            <span>{props.cat}</span>
+                            <h4 className='left-align'>{props.title}</h4>
+                        </div>
                     </div>
                 </div>
             </Link>
             
-            
+            <div className='divider'></div>
         </li>
+        
     )
 } 
 
