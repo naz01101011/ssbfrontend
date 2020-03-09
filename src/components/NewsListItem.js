@@ -11,15 +11,10 @@ const NewsListItem = (props) => {
             
             <Link to={'/' + props.slug}>
                 <div className='section'>
-                    <div className='row valign-wrapper'>
-                        <div className='col s2'>
-                            <img className='responsive-img' src={urlFor(props.image).height(130).quality(30).url()} />
-                        </div>
-                        <div className='col s10'>
+                    <div className='s'>
                             <span>{SerializeDate(props.date)}</span>
                             <span>{props.cat}</span>
-                            <h4 className='left-align'>{props.title}</h4>
-                        </div>
+                            <h5>{props.title}</h5>
                     </div>
                 </div>
             </Link>

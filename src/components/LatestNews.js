@@ -13,23 +13,23 @@ const LatestNews = (props) => {
     // console.log(mainPost)
     return (
         <div className='row section'>
-            <div className="col s12 m8">
+            <div className="col m12 l8">
                 <Link to={'/' + mainPost.slug}>
                     <div>
                         <div className="featImg">
-                            <img className='responsive-img' src={urlFor(mainPost.mainImage).width(500).quality(30).url()} />
+                            <img className='responsive-img' src={urlFor(mainPost.mainImage).width(800).height(400).fit('crop').crop('focalpoint').quality(30).url()} />
                         </div>
                         <div>
                             <span>{SerializeDate(mainPost.publishedAt)}</span>
                             <span>{mainPost.categ}</span>
-                            <h2 className="left-align">
+                            <h3 className="left-align">
                                 {mainPost.title}
-                            </h2>
+                            </h3>
                         </div>
                     </div>
                 </Link>
             </div>
-            <div className="col s12 m8">
+            <div className="col m12 l4">
                 <NewsList list={nextPosts} />
             </div>
         </div>
