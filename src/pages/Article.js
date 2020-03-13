@@ -14,32 +14,31 @@ const Article = (props) => {
     const [img, setImg] = useState({});
     const [loaded, setLoaded] = useState(false);
 
-    const fetchData = (q) => {
-        let slug = props.match.params.article_slug
-        let query = '*[slug.current == "' + slug + '"]{ _id, title, mainImage, publishedAt, "categ": categories[0]->title, body}';
-
-        Client.fetch(query)
-        .then(res => {
-            // console.log(res[0]);
-            // setBody(res.data.result);
-            setTitle(res[0].title)
-            setBody(res[0].body)
-            setId(res[0]._id)
-            setDate(SerializeDate(res[0].publishedAt))
-            setCat(res[0].categ)
-            setImg(res[0].mainImage)
-            setLoaded(true);
-        })
-        .catch(err => {
-            // console.log('Error:');
-            // console.log(err);
-            setHasError(true);
-        })
-    }
+    
 
     useEffect(() => {
+
+        const fetchData = () => {
+            let slug = props.match.params.article_slug
+            let query = '*[slug.current == "' + slug + '"]{ _id, title, mainImage, publishedAt, "categ": categories[0]->title, body}';
+    
+            Client.fetch(query)
+            .then(res => {
+                setTitle(res[0].title)
+                setBody(res[0].body)
+                setId(res[0]._id)
+                setDate(SerializeDate(res[0].publishedAt))
+                setCat(res[0].categ)
+                setImg(res[0].mainImage)
+                setLoaded(true);
+            })
+            .catch(err => {
+                setHasError(true);
+            })
+        };
+
         fetchData();    
-    }, [])
+    }, [props]);
 
     if (hasError) {
         return (
@@ -53,7 +52,7 @@ const Article = (props) => {
                 {loaded ? (
                     <div>  
                         <h3>{title}</h3>
-                        <img src={urlFor(img).width(500).quality(30).url()} />
+                        <img src={urlFor(img).width(500).quality(30).url()} alt={img.alt} />
                         <span>{date}</span>
                         <span>{cat}</span>
                         <SerializeText body={body} id={id} />

@@ -24,3 +24,12 @@ a:hover {
 .newslist {
   margin: 0;
 }
+
+.leaderboardzone {
+  padding: 3px 0;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}

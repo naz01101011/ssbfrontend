@@ -11,6 +11,8 @@ const SerializeText = (props) => {
             })
             
         })
+
+        return null;
     });
     // console.log(blockList)
 

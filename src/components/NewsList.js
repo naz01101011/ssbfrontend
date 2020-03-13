@@ -2,7 +2,7 @@ import React from 'react';
 import NewsListItem from './NewsListItem';
 
 const NewsList = (props) => {
-    console.log(props)
+    // console.log(props)
     return (
         <div>
             <ul className='newslist'>

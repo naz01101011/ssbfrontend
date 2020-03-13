@@ -8,7 +8,7 @@ const AppHeader = (props) => {
             <div className='container'>
                 <nav>
                     <div className="nav-wrapper pink darken-4">
-                        <a className="brand-logo left">SSB</a>
+                        <a href='http://stiridesibiu.ro' className="brand-logo left">SSB</a>
                         <ul id="nav-mobile" className="right">
                             <li>
                                 <Link  to='/' >Stiri</Link>

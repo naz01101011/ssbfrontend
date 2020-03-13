@@ -24,11 +24,15 @@ const Home = () => {
     }, [])
 
     return (
-        <div className='container'>
+        <div className='wrapper'>
             {loaded ? (
-                <LatestNews initNews={initNews}/>
+                <div>
+                    <LatestNews initNews={initNews}/>
+                </div>
             ) : (
-                <h2 className='center'>Aduc ultimele stiri...</h2>
+                <div>
+                    <h4 className='center'>Aduc ultimele stiri...</h4>
+                </div>
             )}
             
         </div>
