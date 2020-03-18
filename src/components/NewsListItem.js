@@ -10,11 +10,11 @@ const NewsListItem = (props) => {
         return (
             <li className='newslistitem'>
                 
-                <Link className='post-link' to={'/' + props.slug}>
+                <Link className='link' to={'/' + props.slug}>
                     <div className='section'>
                         <div className='s'>
-                                <span>{SerializeDate(props.date)}</span>
-                                <span>{props.cat}</span>
+                                <span className='info grey lighten-4  deep-orange-text text-darken-1'>{SerializeDate(props.date)} <span className='deep-orange darken-1'>{props.cat}</span></span>
+                                
                                 <h5>{props.title}</h5>
                         </div>
                     </div>
@@ -28,14 +28,14 @@ const NewsListItem = (props) => {
         return (
             <li className='newslistitem'>
                 
-                <Link className='post-link' to={'/' + props.slug}>
+                <Link className='link' to={'/' + props.slug}>
                     <div className='section row'>
                         <div className='col s4'>
-                            <img className='responsive-img' src={urlFor(props.image).width(400).height(300).fit('crop').crop('focalpoint').quality(30).url()} alt={props.image.alt} />
+                            <img className='responsive-img' src={urlFor(props.image).width(400).height(300).fit('crop').crop('focalpoint').quality(30).url()} alt='' />
                         </div>
                         <div className='col s8'>
-                                <span>{SerializeDate(props.date)}</span>
-                                <span>{props.cat}</span>
+                                <span className='info grey lighten-4  deep-orange-text text-darken-1'>{SerializeDate(props.date)} <span className='deep-orange darken-1'>{props.cat}</span></span>
+                                
                                 <h5>{props.title}</h5>
                         </div>
                     </div>

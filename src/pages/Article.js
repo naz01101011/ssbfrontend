@@ -3,6 +3,7 @@ import Client from '../components/Client'
 import SerializeText from '../serializers/SerializeText'
 import SerializeDate from '../serializers/SerializeDate'
 import urlFor from '../components/ImgBuilder'
+import SideBar from '../components/SideBar';
 
 const Article = (props) => {
     const [hasError, setHasError] = useState(false);
@@ -52,10 +53,19 @@ const Article = (props) => {
                 {loaded ? (
                     <div>  
                         <h3>{title}</h3>
-                        <img src={urlFor(img).width(500).quality(30).url()} alt={img.alt} />
-                        <span>{date}</span>
-                        <span>{cat}</span>
-                        <SerializeText body={body} id={id} />
+                        
+                        <div className='row section'>
+                            <div className='col s12 m8'>
+                                <img className='responsive-img' src={urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url()} alt={img.alt} />
+                                
+                                <span className='info grey lighten-4  deep-orange-text text-darken-1'>{date} <span className='deep-orange darken-1'>{cat}</span></span>
+                                
+                                <SerializeText body={body} id={id} />
+                            </div>
+                            <div className='col s12 m4'>
+                                <SideBar />
+                            </div>
+                        </div>
                     </div>
                 ) : <h3>Aduc Stirea...</h3>}
                 

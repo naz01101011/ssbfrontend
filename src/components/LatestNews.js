@@ -18,14 +18,13 @@ const LatestNews = (props) => {
             <div className='row section flex'>
                 <div className="col m12 l8 main-flex">
                     <div className='main-story'>
-                        <Link className='post-link' to={'/' + mainPost.slug}>
+                        <Link className='link' to={'/' + mainPost.slug}>
                             <div>
                                 <div className="featImg">
                                     <img className='responsive-img' src={urlFor(mainPost.mainImage).width(900).height(470).fit('crop').crop('focalpoint').quality(30).url()} alt={mainPost.mainImage.alt} />
                                 </div>
                                 <div>
-                                    <span>{SerializeDate(mainPost.publishedAt)}</span>
-                                    <span>{mainPost.categ}</span>
+                                    <span className='info grey lighten-3 deep-orange-text text-darken-1'>{SerializeDate(mainPost.publishedAt)} <span className='deep-orange darken-1'>{mainPost.categ}</span></span>
                                     <h3 className="left-align">
                                         {mainPost.title}
                                     </h3>

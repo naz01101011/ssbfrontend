@@ -5,21 +5,21 @@ import {Link} from 'react-router-dom';
 const AppHeader = (props) => {
     return (
         <header>
-            <div className='container'>
-                <nav>
-                    <div className="nav-wrapper pink darken-4">
-                        <a href='http://stiridesibiu.ro' className="brand-logo left">SSB</a>
-                        <ul id="nav-mobile" className="right">
+            <nav>
+                <div className="nav-wrapper grey lighten-4">
+                    <div className='container'>
+                        <Link className="brand-logo deep-orange-text text-darken-1" to='/' >știri de <span>Sibiu</span></Link>
+                        <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li>
-                                <Link  to='/' >Stiri</Link>
+                                <Link className='grey-text text-darken-2' to='/' >Știri</Link>
                             </li>
                             <li>
-                                <Link to='/contact'>Contact</Link>
+                                <Link className='grey-text text-darken-2' to='/contact'>Contact</Link>
                             </li>
                         </ul>
                     </div>
-                </nav>
-            </div>
+                </div>
+            </nav>
         </header>   
     );
 }

@@ -19,7 +19,7 @@ const SerializeText = (props) => {
     return (
         <div>
         {blockList.map(i => (
-            <p key={i.index + Math.random()}>{i.kid}</p>
+            <p className='' key={i.index + Math.random()}>{i.kid}</p>
         ))}
         </div>
     )

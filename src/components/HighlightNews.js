@@ -8,13 +8,13 @@ const Highlight = (props) => {
     // console.log(highlightPost)
 
     return (
-        <div className='highlight teal lighten-4'>
+        <div className='grey lighten-2'>
             <div className='container section'>
-                <Link className='post-link' to={'/' + highlightPost.slug}>
+                <Link className='link' to={'/' + highlightPost.slug}>
                     <div className='row'>
                         <div className='col m12 l8'>
-                            <span>{SerializeDate(highlightPost.publishedAt)}</span>
-                            <span>{highlightPost.categ}</span>
+                            <span className='info grey lighten-4 deep-orange-text'>{SerializeDate(highlightPost.publishedAt)}  <span className='deep-orange darken-1'>{highlightPost.categ}</span></span>
+                           
                             <h3 className="left-align">
                                 {highlightPost.title}
                             </h3>

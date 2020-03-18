@@ -1,7 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, 'IBM Plex Sans',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -12,12 +13,19 @@ code {
     monospace;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5, h6 {
   color: #333;
+  font-weight: bold !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 p {
-  font-size: 18px;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 a:hover {
@@ -25,12 +33,28 @@ a:hover {
   color: inherit !important;
 }
 
+nav {
+  box-shadow: none !important;
+}
+
+.brand-logo {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.brand-logo span {
+  font-weight: bold;;
+}
+
 .newslist {
   margin: 0;
   height: 100%;
 }
 
-.leaderboardzone {
+.adzone {
   padding: 3px 0;
 }
 
@@ -45,7 +69,7 @@ a:hover {
   justify-content: space-between;
 }
 
-.post-link {
+.link {
   color: inherit;
 }
 
@@ -59,4 +83,29 @@ a:hover {
 
 .list-wrapper {
   height: 100%;
+}
+
+.info {
+  display: inline-block;
+  width: 100%;
+  /* background-image: linear-gradient(to right, rgb(231, 231, 231), white, white); */
+  padding-left: 4px;
+}
+
+.info span {
+  display: inline-block;
+  padding: 0px 4px;
+  color: white;
+  float: right;
+}
+
+@media only screen and (min-width: 600px) {
+  p {
+    font-size: 1.1em;
+  }  
+}
+@media only screen and (min-width: 992px) {
+  p {
+    font-size: 1.3em;
+  }  
 }

@@ -13,7 +13,7 @@ const Leaderboard = () => {
 
     if (currentBanner) {
         return (
-            <div className='center grey lighten-4 leaderboardzone'>
+            <div className='center grey lighten-4 adzone'>
                 <span className='adslabel left-align'>Pubicitate</span>
                 <div>
                     <a href={currentBanner.url} target='_blank' rel="noopener noreferrer">
@@ -24,7 +24,7 @@ const Leaderboard = () => {
         );
     } else {
         return (
-            <div className='center grey lighten-4 leaderboardzone'>
+            <div className='center grey lighten-4 adzone'>
                 <span className='adslabel left-align'>Google Ads</span>
             </div>
         );

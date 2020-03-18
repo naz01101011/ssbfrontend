@@ -3,6 +3,7 @@ import LatestNews from '../components/LatestNews';
 import Highlight from '../components/HighlightNews';
 import NewsList from '../components/NewsList';
 import Client from '../components/Client';
+import SideBar from '../components/SideBar';
 
 const Home = () => {
     const query = '*[_type == "post"] | order(publishedAt desc) { _id, title, mainImage, publishedAt, "categ": categories[0]->title, "slug": slug.current, excerpt }[0...20]';
@@ -37,9 +38,11 @@ const Home = () => {
                     <Highlight data={highlightNewsData}/>
                     <div className='container section row'>
                         <div className='col s12 m8'>
-                            <NewsList list={blogListData} images='false'/>
+                            <NewsList list={blogListData} images='true'/>
                         </div>
-                        <div className='col s12 m4'></div>
+                        <div className='col s12 m4'>
+                            <SideBar />
+                        </div>
                     </div>
                 </div>
             ) : (

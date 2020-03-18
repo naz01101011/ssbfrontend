@@ -6,6 +6,7 @@ import Contact from './pages/Contact'
 import Article from './pages/Article';
 import AdsContext from './context/AdsContext';
 import Client from './components/Client'
+import AppFooter from './components/AppFooter';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/contact" component={Contact} />
           <Route path="/:article_slug" component={Article} />
         </Switch>
+        <AppFooter />
       </Router>
     </AdsContext.Provider>
   );
