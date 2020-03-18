@@ -16,6 +16,10 @@ h1, h2, h3, h4 {
   color: #333;
 }
 
+p {
+  font-size: 18px;
+}
+
 a:hover {
   text-decoration: none !important;
   color: inherit !important;
@@ -23,6 +27,7 @@ a:hover {
 
 .newslist {
   margin: 0;
+  height: 100%;
 }
 
 .leaderboardzone {
@@ -32,4 +37,26 @@ a:hover {
 .flex {
   display: flex;
   flex-wrap: wrap;
+}
+
+.main-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.post-link {
+  color: inherit;
+}
+
+.main-story {
+  overflow: hidden;
+}
+
+.main-story-excerpt {
+  visibility: visible;
+}
+
+.list-wrapper {
+  height: 100%;
 }

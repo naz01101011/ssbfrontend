@@ -4,37 +4,33 @@ import urlFor from '../components/ImgBuilder'
 
 const Leaderboard = () => {
     let ads = useContext(AdsContext)
-    let hasAds = false;
-    let currentBanner = {};
+    let publishedBanners = Object.values(ads);
+    let currentBanner = publishedBanners.find(obj => {
+        return obj.positionSet[0] === 'mid-leaderboard'
+    })
+    // console.log(ads)
+    // console.log(currentBanner)
 
-    if (Object.keys(ads).length !== 0) {
-        // console.log(ads)
-        let publishedBanners = Object.values(ads);
-        currentBanner = publishedBanners.find(obj => {
-            return obj.title === 'leaderboard'
-        })
-        hasAds = true;
-        // console.log(currentBanner.bannerImg)
+    if (currentBanner) {
+        return (
+            <div className='center grey lighten-4 leaderboardzone'>
+                <span className='adslabel left-align'>Pubicitate</span>
+                <div>
+                    <a href={currentBanner.url} target='_blank' rel="noopener noreferrer">
+                        <img className='responsive-img' src={urlFor(currentBanner.bannerImg).width(728).height(90).url()} id={currentBanner._id} alt='leaderboard' />
+                    </a>
+                </div>
+            </div>
+        );
     } else {
-        console.log('no Ads')
+        return (
+            <div className='center grey lighten-4 leaderboardzone'>
+                <span className='adslabel left-align'>Google Ads</span>
+            </div>
+        );
     }
 
-    return (
-        <div>
-            {hasAds ? (
-                <div className='center grey lighten-4 leaderboardzone'>
-                    <span className='adslabel left-align'>Pubicitate</span>
-                    <div>
-                        <a href={currentBanner.url} target='_blank'>
-                            <img className='responsive-img' src={urlFor(currentBanner.bannerImg).width(728).height(90).url()} id={currentBanner._id} alt='leaderboard' />
-                        </a>
-                    </div>
-                </div>
-            ) : (
-                <span></span>
-            )}
-        </div>
-    );
+    
 }
 
 export default Leaderboard;
