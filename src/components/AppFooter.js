@@ -9,8 +9,11 @@ const AppFooter = () => {
                     <div className='col s12 m6'>
                         <Link className='deep-orange-text text-darken-1' to='/' >știri de <b>Sibiu</b></Link>
                         <ul className="">
+                        <li>
+                                <Link className='grey-text text-darken-2' to='/' >Acasă</Link>
+                            </li>
                             <li>
-                                <Link className='grey-text text-darken-2' to='/' >Stiri</Link>
+                                <Link className='grey-text text-darken-2' to='/stiri' >Știri</Link>
                             </li>
                             <li>
                                 <Link className='grey-text text-darken-2' to='/contact'>Contact</Link>

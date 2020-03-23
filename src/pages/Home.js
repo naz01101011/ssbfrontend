@@ -47,7 +47,7 @@ const Home = () => {
                 </div>
             ) : (
                 <div>
-                    <h4 className='center'>Aduc ultimele stiri...</h4>
+                    <h4 className='center'>Aduc ultimele știri...</h4>
                 </div>
             )}
             
