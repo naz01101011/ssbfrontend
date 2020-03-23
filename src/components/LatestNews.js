@@ -18,7 +18,7 @@ const LatestNews = (props) => {
             <div className='row section flex'>
                 <div className="col m12 l8 main-flex">
                     <div className='main-story'>
-                        <Link className='link' to={'/' + mainPost.slug}>
+                        <Link className='link' to={'/stiri/' + mainPost.slug}>
                             <div>
                                 <div className="featImg">
                                     <img className='responsive-img' src={urlFor(mainPost.mainImage).width(900).height(470).fit('crop').crop('focalpoint').quality(30).url()} alt={mainPost.mainImage.alt} />

@@ -10,7 +10,7 @@ const Highlight = (props) => {
     return (
         <div className='grey lighten-2'>
             <div className='container section'>
-                <Link className='link' to={'/' + highlightPost.slug}>
+                <Link className='link' to={'/stiri/' + highlightPost.slug}>
                     <div className='row'>
                         <div className='col m12 l8'>
                             <span className='info grey lighten-4 deep-orange-text'>{SerializeDate(highlightPost.publishedAt)}  <span className='deep-orange darken-1'>{highlightPost.categ}</span></span>

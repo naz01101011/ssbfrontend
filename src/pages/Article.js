@@ -56,7 +56,12 @@ const Article = (props) => {
                         
                         <div className='row section'>
                             <div className='col s12 m8'>
-                                <img className='responsive-img' src={urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url()} alt={img.alt} />
+                                {img ? (
+                                    <img className='responsive-img' src={urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url()} alt={img.alt} />
+                                ) : (
+                                    <span className='info grey lighten-4  grey-text text-darken-2'>Articol fără imagine</span>
+                                ) }
+                                
                                 
                                 <span className='info grey lighten-4  deep-orange-text text-darken-1'>{date} <span className='deep-orange darken-1'>{cat}</span></span>
                                 

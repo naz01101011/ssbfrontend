@@ -28,7 +28,7 @@ const AppFooter = () => {
             <div className='footer-copyright'>
                 <div className='container deep-orange-text'>
                     © 2020 Stiri de Sibiu 
-                    <Link className='grey-text text-darken-2 right' to='/sitemap'>Harta Siteului</Link>
+                    <a className='grey-text text-darken-2 right' href='/sitemap.xml'>Harta Siteului</a>
                 </div>
             </div>
         </footer>

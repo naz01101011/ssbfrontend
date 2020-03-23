@@ -10,7 +10,7 @@ const NewsListItem = (props) => {
         return (
             <li className='newslistitem'>
                 
-                <Link className='link' to={'/' + props.slug}>
+                <Link className='link' to={'/stiri/' + props.slug}>
                     <div className='section'>
                         <div className='s'>
                                 <span className='info grey lighten-4  deep-orange-text text-darken-1'>{SerializeDate(props.date)} <span className='deep-orange darken-1'>{props.cat}</span></span>
@@ -28,7 +28,7 @@ const NewsListItem = (props) => {
         return (
             <li className='newslistitem'>
                 
-                <Link className='link' to={'/' + props.slug}>
+                <Link className='link' to={'/stiri/' + props.slug}>
                     <div className='section row'>
                         <div className='col s4'>
                             <img className='responsive-img' src={urlFor(props.image).width(400).height(300).fit('crop').crop('focalpoint').quality(30).url()} alt='' />
