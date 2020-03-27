@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Stiri from './pages/Stiri';
 import Contact from './pages/Contact'
 import Article from './pages/Article';
+import Search from './pages/Search';
 import AdsContext from './context/AdsContext';
 import Client from './components/Client'
 import AppFooter from './components/AppFooter';
@@ -32,8 +33,8 @@ function App() {
         <AppHeader />
         <Switch>
           <Route exact path="/" component={Home} />
-          
           <Route path="/contact" component={Contact} />
+          <Route path="/search" component={Search} />
           <Route path="/stiri/:article_slug" component={Article} />
           <Route path="/stiri" component={Stiri} />
         </Switch>

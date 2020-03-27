@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import SearchBox from './SearchBox';
 
 
 const AppHeader = (props) => {
@@ -10,11 +11,12 @@ const AppHeader = (props) => {
                     <div className='container'>
                         <Link className="brand-logo deep-orange-text text-darken-1" to='/' >știri de <span>Sibiu</span></Link>
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
+                            <li><SearchBox /></li>
                             <li>
                                 <Link className='grey-text text-darken-2' to='/' >Acasă</Link>
                             </li>
                             <li>
-                                <Link className='grey-text text-darken-2' to='/stiri' >Știri</Link>
+                                <Link className='grey-text text-darken-2' to='/stiri' >Arhivă</Link>
                             </li>
                             <li>
                                 <Link className='grey-text text-darken-2' to='/contact'>Contact</Link>

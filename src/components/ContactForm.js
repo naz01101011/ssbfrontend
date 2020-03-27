@@ -26,7 +26,7 @@ const ContactForm = () => {
                 <input placeholder='Nume si Prenume' id="nume" type="text" className="validate" name='sender_name' required/>
                 <input placeholder='Adresa ta de email' id="email" type="text" className="validate" name='sender_email' required/>
                 <textarea placeholder='Mesajul tau' id="textarea" className="materialize-textarea" name='message' style={{minHeight: 200}} required/>
-                <button className="btn waves-effect waves-light" type="submit" name="action">Trimite
+                <button className="btn waves-effect waves-light deep-orange darken-1" type="submit" name="action">Trimite
                     <i className="material-icons right">send</i>
                 </button>
             </form>
