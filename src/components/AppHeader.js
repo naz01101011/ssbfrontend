@@ -15,9 +15,9 @@ const AppHeader = (props) => {
                             <li>
                                 <Link className='grey-text text-darken-2' to='/' >Acasă</Link>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link className='grey-text text-darken-2' to='/stiri' >Arhivă</Link>
-                            </li>
+                            </li> */}
                             <li>
                                 <Link className='grey-text text-darken-2' to='/contact'>Contact</Link>
                             </li>

@@ -9,7 +9,10 @@ const AppFooter = () => {
                     <div className='col s12 m6'>
                         <Link className='deep-orange-text text-darken-1' to='/' >știri de <b>Sibiu</b></Link>
                         <ul className="">
-                        <li>
+                            <li>
+                                <Link className='grey-text text-darken-2' to='/confidentialitate'>Politică de Confidențialitate</Link>
+                            </li>
+                            <li>
                                 <Link className='grey-text text-darken-2' to='/' >Acasă</Link>
                             </li>
                             <li>
@@ -31,7 +34,9 @@ const AppFooter = () => {
             <div className='footer-copyright'>
                 <div className='container deep-orange-text'>
                     © 2020 Stiri de Sibiu 
-                    <a className='grey-text text-darken-2 right' href='/sitemap.xml'>Harta Siteului</a>
+                    <a className='grey-text text-darken-2 right' href='/sitemap.xml'>Harta Siteului</a> 
+                    <span className='right' style={{marginRight:5, marginLeft:5}}> | </span>
+                    <Link className='grey-text text-darken-2 right' to='/confidentialitate'>Politică de Confidențialitate</Link>
                 </div>
             </div>
         </footer>
