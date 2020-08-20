@@ -6,15 +6,15 @@ const Rectangle = () => {
     let ads = useContext(AdsContext)
     let publishedBanners = Object.values(ads);
     let currentBanners = publishedBanners.filter(obj => {
-        return obj.positionSet[0] === 'tall'
+        return obj.positionSet[0] === 'rectangle'
     })
     // console.log(ads)
     // console.log(currentBanners)
 
     if (currentBanners) {
         return (
-            <div className='center grey lighten-4 adzone'>
-                <span className='adslabel left-align'>Pubicitate</span>
+            <div className='center grey lighten-4 adcontainer'>
+                <span className='adlabel left-align'>Pubicitate</span>
                 {currentBanners.map((ad, index) => {
                     return (
                         <div key={ad._id} >
@@ -29,8 +29,8 @@ const Rectangle = () => {
         );
     } else {
         return (
-            <div className='center grey lighten-4 adzone'>
-                <span className='adslabel left-align'>Google Ads</span>
+            <div className='center grey lighten-4 adcontainer'>
+                <span className='adlabel left-align'>Google Ads</span>
             </div>
         );
     }

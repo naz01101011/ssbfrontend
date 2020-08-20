@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import SearchBox from './SearchBox';
+import AdsLeaderboard from '../components/AdsLeaderboard';
 
 
 const AppHeader = (props) => {
@@ -25,6 +26,7 @@ const AppHeader = (props) => {
                     </div>
                 </div>
             </nav>
+            <AdsLeaderboard position='large-top-leaderboard' googleads='false'/>
         </header>   
     );
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import urlFor from '../components/ImgBuilder';
 import SerializeDate from '../serializers/SerializeDate';
+import AdsLeaderboard from '../components/AdsLeaderboard';
 
 const Highlight = (props) => {
     let highlightPost = props.data[0];
@@ -28,7 +29,9 @@ const Highlight = (props) => {
                     </div>
                 </Link>
             </div>
+            <AdsLeaderboard position='large-mid-leaderboard' googleads='true'/>
         </div>
+        
     )
 }
 

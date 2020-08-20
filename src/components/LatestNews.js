@@ -36,7 +36,7 @@ const LatestNews = (props) => {
                         </Link>
                     </div>
                     <div className='mid-lb'>
-                        <AdsLeaderboard />
+                        <AdsLeaderboard position='mid-leaderboard' googleads='true'/>
                     </div>
                 </div>
                 <div className="col m12 l4">

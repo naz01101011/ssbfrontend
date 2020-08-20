@@ -1,9 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import AdsLeaderboard from '../components/AdsLeaderboard';
+
 
 const AppFooter = () => {
     return (
         <footer className='page-footer grey lighten-4'>
+            <AdsLeaderboard position='large-bot-leaderboard' googleads='true'/>
             <div className='container'>
                 <div className='row'>
                     <div className='col s12 m6'>
