@@ -25,7 +25,7 @@ const Leaderboard = (props) => {
             </div>
         );
     } else {
-        if (props.googleads == 'true') {
+        if (props.googleads === 'true') {
             return (
                 <div className='center grey lighten-4 adcontainer'>
                     <span className='adlabel left-align'>Google Ads</span>
