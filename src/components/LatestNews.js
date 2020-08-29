@@ -7,6 +7,7 @@ import SerializeText from '../serializers/SerializeText';
 import AdsLeaderboard from '../components/AdsLeaderboard';
 
 
+
 const LatestNews = (props) => {
     // console.log(props)
     let mainPost = props.data[0]
@@ -29,7 +30,9 @@ const LatestNews = (props) => {
                                         {mainPost.title}
                                     </h3>
                                     <div className='main-story-excerpt'>
-                                        <SerializeText body={mainPost.excerpt} id={mainPost._id} />
+                                        
+                                            <SerializeText body={mainPost.excerpt} id={mainPost._id} />
+                                        
                                     </div>
                                 </div>
                             </div>

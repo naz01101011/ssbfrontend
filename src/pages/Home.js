@@ -40,7 +40,7 @@ const Home = () => {
                     
                     <div className='container section row'>
                         <div className='col s12 m8'>
-                            <NewsList list={blogListData} images='true'/>
+                            <NewsList list={blogListData} images='true' excerpt='true'/>
                         </div>
                         <div className='col s12 m4'>
                             <SideBar list={olderArticles}/>

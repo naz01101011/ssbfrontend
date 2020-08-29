@@ -7,7 +7,10 @@ const SideBar = (props) => {
         return (
             <div>
                 <AdsRectangle />
+                <div className='section'>
+                    <h5 className='padding center grey lighten-4  deep-orange-text text-darken-1'>Arhiva recenta</h5>
                 <NewsList list={props.list} images='false'/>
+                </div>
             </div>
         )
     } else {
