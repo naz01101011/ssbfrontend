@@ -4,10 +4,19 @@ import urlFor from '../components/ImgBuilder'
 import SerializeDate from '../serializers/SerializeDate'
 
 const NewsListItem = (props) => {
-    // console.log(props.image)
+    // console.log(props.excerpt[0].children[0].text);
+    
+    let showExcerpt = false;
+
+    if (!props.hasExcerpt) {
+        showExcerpt = false;
+    }
+    else if (typeof(props.excerpt) != "undefined") {
+        showExcerpt = true;
+    }
 
     if (!props.hasImages) {
-        if (!props.hasExcerpt) {
+        if (!showExcerpt) {
             return (
                 <li className='newslistitem'>
                     
@@ -46,7 +55,7 @@ const NewsListItem = (props) => {
         }
         
     } else {
-        if (!props.hasExcerpt) {
+        if (!showExcerpt) {
             return (
                 <li className='newslistitem'>
                     
