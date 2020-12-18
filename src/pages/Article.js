@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Client from '../components/Client'
-import SerializeText from '../serializers/SerializeText'
+//import SerializeText from '../serializers/SerializeText'
 import SerializeDate from '../serializers/SerializeDate'
 import urlFor from '../components/ImgBuilder'
 import SideBar from '../components/SideBar';
@@ -9,7 +9,7 @@ import BlockContent from '@sanity/block-content-to-react';
 const Article = (props) => {
     const [hasError, setHasError] = useState(false);
     const [body, setBody] = useState('');
-    const [id, setId] = useState('');
+    //const [id, setId] = useState('');
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [cat, setCat] = useState('');
@@ -26,7 +26,7 @@ const Article = (props) => {
             .then(res => {
                 setTitle(res[0].title)
                 setBody(res[0].body)
-                setId(res[0]._id)
+                //setId(res[0]._id)
                 setDate(SerializeDate(res[0].publishedAt))
                 setCat(res[0].categ)
                 setImg(res[0].mainImage)
