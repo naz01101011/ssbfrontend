@@ -4,6 +4,7 @@ import SerializeText from '../serializers/SerializeText'
 import SerializeDate from '../serializers/SerializeDate'
 import urlFor from '../components/ImgBuilder'
 import SideBar from '../components/SideBar';
+import BlockContent from '@sanity/block-content-to-react';
 
 const Article = (props) => {
     const [hasError, setHasError] = useState(false);
@@ -14,8 +15,6 @@ const Article = (props) => {
     const [cat, setCat] = useState('');
     const [img, setImg] = useState({});
     const [loaded, setLoaded] = useState(false);
-
-    
 
     useEffect(() => {
 
@@ -41,6 +40,21 @@ const Article = (props) => {
         fetchData();    
     }, [props]);
 
+    console.log(body)
+    console.log(img)
+
+    const serializers = {
+        types: {
+            mainImage: props => (
+                <div style={{maxWidth:'max-content', marginLeft:'auto', marginRight:'auto'}}>
+                    <img className='responsive-img' src={urlFor(props.node).height(450).fit('crop').crop('focalpoint').quality(60).url()} alt={props.node.alt} key={Math.random()}/>
+                    <span className='info grey lighten-4 deep-orange-text text-darken-1' style={{display:'block'}}>{props.node.caption}</span>
+                </div>
+            )
+        }
+        
+    }
+
     if (hasError) {
         return (
             <div className='container section'>
@@ -65,7 +79,7 @@ const Article = (props) => {
                                 
                                 <span className='info grey lighten-4  deep-orange-text text-darken-1'>{date} <span className='deep-orange darken-1'>{cat}</span></span>
                                 
-                                <SerializeText body={body} id={id} />
+                                <BlockContent blocks={body} serializers={serializers}/>
                             </div>
                             <div className='col s12 m4'>
                                 <SideBar />

@@ -13,7 +13,7 @@ const Leaderboard = (props) => {
     // console.log(currentBanner)
 
     if (currentBanner) {
-        console.log(currentBanner)
+        // console.log(currentBanner)
         return (
             <div className='center grey lighten-4 adcontainer'>
                 <span className='adlabel left-align black-text'>Pubicitate</span>
@@ -32,7 +32,7 @@ const Leaderboard = (props) => {
                 </div>
             );
         } else {
-            console.log("No published leaderboard")
+            // console.log("No published leaderboard")
             return null;
         }   
     }
