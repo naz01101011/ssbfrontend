@@ -40,16 +40,21 @@ const Article = (props) => {
         fetchData();    
     }, [props]);
 
-    console.log(body)
-    console.log(img)
-
     const serializers = {
         types: {
             mainImage: props => (
                 <div style={{maxWidth:'max-content', marginLeft:'auto', marginRight:'auto'}}>
                     <img className='responsive-img' src={urlFor(props.node).height(450).fit('crop').crop('focalpoint').quality(60).url()} alt={props.node.alt} key={Math.random()}/>
-                    <span className='info grey lighten-4 deep-orange-text text-darken-1' style={{display:'block'}}>{props.node.caption}</span>
+                    <span className='info grey lighten-4 text-darken-1' style={{display:'block'}}>{props.node.caption}</span>
                 </div>
+            )
+        },
+	    marks: {
+            strong: props => (
+                <span style={{fontWeight:'bold'}}>{props.children}</span>
+            ),
+            link: props => (
+                <a href={props.mark.href} target='_blank' rel='noopener noreferrer'>{props.children}</a>
             )
         }
         
