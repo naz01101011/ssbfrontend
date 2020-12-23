@@ -15,7 +15,7 @@ const Highlight = (props) => {
                 <Link className='link' to={'/stiri/' + highlightPost.slug}>
                     <div className='row valign-wrapper'>
                         <div className='col m12 l8'>
-                            <span className='info grey lighten-4 deep-orange-text'>{SerializeDate(highlightPost.publishedAt)}  <span className='deep-orange darken-1'>{highlightPost.categ}</span></span>
+                            <span className='info grey lighten-4 deep-orange-text'>{SerializeDate(highlightPost.publishedAt)}  <span className='grey'>{highlightPost.authorName}</span></span>
                            
                             <h3 className="left-align">
                                 {highlightPost.title}

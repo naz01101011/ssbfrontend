@@ -6,21 +6,9 @@ import Client from '../components/Client';
 import SideBar from '../components/SideBar';
 
 const Home = () => {
-    const query = '*[_type == "post"] | order(publishedAt desc) { _id, title, mainImage, publishedAt, "categ": categories[0]->title, "slug": slug.current, excerpt }[0...30]';
 
     const [initNews, setInitNews] = useState([]);
     const [loaded, setLoaded] = useState(false);
-
-    const fetchData = () => {
-        Client.fetch(query)
-            .then(res => {
-                // console.log(res);
-                setInitNews(res)
-                setLoaded(true)
-            })
-    }
-
-    // console.log(initNews)
 
     const latestNewsData = initNews.slice(0, 6);
     const highlightNewsData = initNews.slice(6, 7);
@@ -28,11 +16,25 @@ const Home = () => {
     const olderArticles = initNews.slice(21, 30)
 
     useEffect(() => {
+
+        const query = '*[_type == "post"] | order(publishedAt desc) { _id, title, mainImage, publishedAt, "categ": categories[0]->title, "authorName": authors[0].author->name, "slug": slug.current, excerpt }[0...30]';
+        const fetchData = () => {
+            Client.fetch(query)
+                .then(res => {
+                    // console.log(res);
+                    setInitNews(res)
+                    setLoaded(true)
+                })
+        }
+
+        // console.log(initNews)
+
+
         fetchData();
     }, [])
 
     return (
-        <div className='wrapper'>
+        <main className='wrapper'>
             {loaded ? (
                 <div>
                     <LatestNews data={latestNewsData}/>
@@ -54,7 +56,7 @@ const Home = () => {
                 </div>
             )}
             
-        </div>
+        </main>
     )
 }
 

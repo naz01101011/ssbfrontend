@@ -5,6 +5,7 @@ import SerializeDate from '../serializers/SerializeDate'
 import urlFor from '../components/ImgBuilder'
 import SideBar from '../components/SideBar';
 import BlockContent from '@sanity/block-content-to-react';
+import {Link} from 'react-router-dom';
 
 const Article = (props) => {
     const [hasError, setHasError] = useState(false);
@@ -68,9 +69,10 @@ const Article = (props) => {
         )    
     } else {
         return (
-            <div className='container section'>
+            <main className='container section'>
                 {loaded ? (
                     <div>  
+                      <span><Link to='/'>Știri de Sibiu</Link> > Știri</span>
                         <h3>{title}</h3>
                         
                         <div className='row section'>
@@ -93,7 +95,7 @@ const Article = (props) => {
                     </div>
                 ) : <h3>Aduc Stirea...</h3>}
                 
-            </div>
+            </main>
         )
     }
 }

@@ -3,7 +3,6 @@ import urlFor from '../components/ImgBuilder';
 
 const SerializeText = (props) => {
     let blockList = [];
-    console.log(props.body);
     Object.values(props.body).map(function(item) {
         if (item._type === "block") {
             let text_block = '';

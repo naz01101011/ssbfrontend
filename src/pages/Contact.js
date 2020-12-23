@@ -1,13 +1,14 @@
 import React from 'react';
-
+import {Link} from 'react-router-dom';
 import SideBar from '../components/SideBar';
 import ContactForm from '../components/ContactForm';
 
 const Contact = () => {
     
     return (
-        <div className='container'>
+        <main className='container'>
             <div className='section'>
+                <span><Link to='/'>Știri de Sibiu</Link> > Contact</span>
                 <h3>Contactează-ne aici</h3>
                 <div className='row'>
                     <div className='col s12 m8'>
@@ -23,7 +24,7 @@ const Contact = () => {
                 </div>
             </div>
             
-        </div>
+        </main>
     )
 }
 

@@ -2,6 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import SideBar from '../components/SideBar';
 import Client from '../components/Client';
 import NewsList from '../components/NewsList';
+import {Link} from 'react-router-dom';
 
 const Search = (props) => {
     let term = props.location.state.term
@@ -25,34 +26,31 @@ const Search = (props) => {
     }, [search])
 
     return (
-        <div className='container'>
-        
-        <div>
+        <main className='container'>
             <div>
-                <h3>Rezultate</h3>
-                <h6>Ai căutat termenul: "{term}"</h6>
-            </div>
-            <div className='row section'>
-                <div className='col s12 m8'>
-                {loaded ? (
-                    <div>
-                        <NewsList list={results} images='false'/>
-                    </div>
-                ) : (
-                    <div>
-                        <h4 className='center'>Caut știrile...</h4>
-                    </div>
-                )}
+              <span><Link to='/'>Știri de Sibiu</Link> > Știri</span>
+                <div>
+                    <h3>Rezultate</h3>
+                    <h6>Ai căutat termenul: "{term}"</h6>
                 </div>
-                <div className='col s12 m4'>
-                    <SideBar/>
+                <div className='row section'>
+                    <div className='col s12 m8'>
+                    {loaded ? (
+                        <div>
+                            <NewsList list={results} images='false'/>
+                        </div>
+                    ) : (
+                        <div>
+                            <h4 className='center'>Caut știrile...</h4>
+                        </div>
+                    )}
+                    </div>
+                    <div className='col s12 m4'>
+                        <SideBar/>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-            
-        
-        </div>
+        </main>
     )
 }
 

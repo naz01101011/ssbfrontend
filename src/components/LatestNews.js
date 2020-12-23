@@ -25,7 +25,7 @@ const LatestNews = (props) => {
                                     <img className='responsive-img' src={urlFor(mainPost.mainImage).width(900).height(470).fit('crop').crop('focalpoint').quality(30).url()} alt={mainPost.mainImage.alt} />
                                 </div>
                                 <div>
-                                    <span className='info grey lighten-3 deep-orange-text text-darken-1'>{SerializeDate(mainPost.publishedAt)} <span className='deep-orange darken-1'>{mainPost.categ}</span></span>
+                                    <span className='info grey lighten-3 deep-orange-text text-darken-1'>{SerializeDate(mainPost.publishedAt)} <span className='grey'>{mainPost.authorName}</span></span>
                                     <h3 className="left-align">
                                         {mainPost.title}
                                     </h3>

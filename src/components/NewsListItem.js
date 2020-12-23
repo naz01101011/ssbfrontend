@@ -23,7 +23,7 @@ const NewsListItem = (props) => {
                     <Link className='link' to={'/stiri/' + props.slug}>
                         <div className='section'>
                             <div className=''>
-                                    <span className='info grey lighten-4  deep-orange-text text-darken-1'>{SerializeDate(props.date)} <span className='deep-orange darken-1'>{props.cat}</span></span>
+                                    <span className='info grey lighten-4  deep-orange-text text-darken-1'>{SerializeDate(props.date)} <span className='grey'>{props.author}</span></span>
                                     <h5>{props.title}</h5>
                             </div>
                         </div>
@@ -40,7 +40,7 @@ const NewsListItem = (props) => {
                     <Link className='link' to={'/stiri/' + props.slug}>
                         <div className='section'>
                             <div className=''>
-                                    <span className='info grey lighten-4  deep-orange-text text-darken-1'>{SerializeDate(props.date)} <span className='deep-orange darken-1'>{props.cat}</span></span>
+                                    <span className='info grey lighten-4  deep-orange-text text-darken-1'>{SerializeDate(props.date)} <span className='grey'>{props.author}</span></span>
                                     
                                     <h5>{props.title}</h5>
                                     <p className='shortexcerpt'>{props.excerpt[0].children[0].text}</p>
@@ -65,7 +65,7 @@ const NewsListItem = (props) => {
                                 <img className='responsive-img' src={urlFor(props.image).width(400).height(300).fit('crop').crop('focalpoint').quality(30).url()} alt='' />
                             </div>
                             <div className='col s8'>
-                                    <span className='info grey lighten-4  deep-orange-text text-darken-1'>{SerializeDate(props.date)} <span className='deep-orange darken-1'>{props.cat}</span></span>
+                                    <span className='info grey lighten-4  deep-orange-text text-darken-1'>{SerializeDate(props.date)} <span className='grey'>{props.author}</span></span>
                                     
                                     <h5>{props.title}</h5>
                             </div>
@@ -86,7 +86,7 @@ const NewsListItem = (props) => {
                                 <img className='responsive-img' src={urlFor(props.image).width(400).height(400).fit('crop').crop('focalpoint').quality(30).url()} alt='' />
                             </div>
                             <div className='col s8'>
-                                    <span className='info grey lighten-4  deep-orange-text text-darken-1'>{SerializeDate(props.date)} <span className='deep-orange darken-1'>{props.cat}</span></span>
+                                    <span className='info grey lighten-4  deep-orange-text text-darken-1'>{SerializeDate(props.date)} <span className='grey'>{props.author}</span></span>
                                     
                                     <h5>{props.title}</h5>
                                     <p className='shortexcerpt'>{props.excerpt[0].children[0].text}</p>

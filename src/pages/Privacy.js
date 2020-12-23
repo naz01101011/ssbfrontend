@@ -1,10 +1,12 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 const Privacy = () => {
     
     return (
-        <div className='container'>
+        <main className='container'>
             <div className='section'>
+                <span><Link to='/'>Știri de Sibiu</Link> > Confidențialitate</span>
                 <div className=''>
                     <h4>A. Introducere</h4>
                     <p>Confidențialitatea vizitatorilor website-ului nostru este foarte importantă pentru noi și ne luăm angajamentul să o protejăm. Această politică explică ce vom face cu informațiile dumneavoastră personale.</p>
@@ -128,7 +130,7 @@ const Privacy = () => {
                 </div>
             </div>
             
-        </div>
+        </main>
     )
 }
 
