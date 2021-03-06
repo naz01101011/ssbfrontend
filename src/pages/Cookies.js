@@ -3,7 +3,7 @@ import Client from '../components/Client'
 import BlockContent from '@sanity/block-content-to-react';
 import {Link} from 'react-router-dom';
 
-const Privacy = (props) => {
+const Cookies = (props) => {
     const [hasError, setHasError] = useState(false);
     const [body, setBody] = useState('');
     const [title, setTitle] = useState('');
@@ -12,7 +12,7 @@ const Privacy = (props) => {
     useEffect(() => {
 
         const fetchData = () => {
-            let slug = "politica-de-confidentialitate"
+            let slug = "politica-de-cookies"
             let query = '*[slug.current == "' + slug + '"]{ _id, title, body}';
      
             Client.fetch(query)
@@ -60,7 +60,7 @@ const Privacy = (props) => {
             <main className='container section'>
                 {loaded ? (
                     <div>  
-                      <span><Link to='/'>Știri de Sibiu</Link> > Confidentialitate</span>
+                      <span><Link to='/'>Știri de Sibiu</Link> > Cookies</span>
                         <h3>{title}</h3>
                         
                         <div className='row section'>
@@ -76,4 +76,4 @@ const Privacy = (props) => {
     }
 }
 
-export default Privacy;
+export default Cookies;

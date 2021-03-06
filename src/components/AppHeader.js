@@ -10,7 +10,7 @@ const AppHeader = (props) => {
             <nav>
                 <div className="nav-wrapper grey lighten-4">
                     <div className='container'>
-                        <Link className="brand-logo deep-orange-text text-darken-1" to='/' >știri de <span>Sibiu</span></Link>
+                        <Link className="brand-logo deep-orange-text text-darken-1" to='/' >știri<span style={{color:"grey"}}>de</span>Sibiu<span style={{color:"grey"}}>.ro</span></Link>
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li><SearchBox /></li>
                             <li>

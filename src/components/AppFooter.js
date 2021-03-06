@@ -16,6 +16,9 @@ const AppFooter = () => {
                                 <Link className='grey-text text-darken-2' to='/confidentialitate'>Politică de Confidențialitate</Link>
                             </li>
                             <li>
+                                <Link className='grey-text text-darken-2' to='/cookies'>Politică de Cookies</Link>
+                            </li>
+                            <li>
                                 <Link className='grey-text text-darken-2' to='/' >Acasă</Link>
                             </li>
                             <li>
@@ -36,10 +39,12 @@ const AppFooter = () => {
             </div>
             <div className='footer-copyright'>
                 <div className='container deep-orange-text'>
-                    © 2020 Stiri de Sibiu 
+                    © 2021 Stiri de Sibiu 
                     <a className='grey-text text-darken-2 right' href='/sitemap.xml'>Harta Siteului</a> 
                     <span className='right' style={{marginRight:5, marginLeft:5}}> | </span>
                     <Link className='grey-text text-darken-2 right' to='/confidentialitate'>Politică de Confidențialitate</Link>
+                    <span className='right' style={{marginRight:5, marginLeft:5}}> | </span>
+                    <Link className='grey-text text-darken-2 right' to='/cookies'>Politică de Cookies</Link>
                 </div>
             </div>
         </footer>
