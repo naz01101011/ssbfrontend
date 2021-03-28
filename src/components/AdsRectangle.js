@@ -9,9 +9,9 @@ const Rectangle = () => {
         return obj.positionSet[0] === 'rectangle'
     })
     // console.log(ads)
-    // console.log(currentBanners)
+    // console.log(currentBanners.length)
 
-    if (currentBanners) {
+    if (currentBanners.length !== 0) {
         return (
             <div className='center grey lighten-4 adcontainer'>
                 <span className='adlabel left-align'>Pubicitate</span>
@@ -30,7 +30,7 @@ const Rectangle = () => {
     } else {
         return (
             <div className='center grey lighten-4 adcontainer'>
-                <span className='adlabel left-align'>Google Ads</span>
+                {/* <span className='adlabel left-align'>Google Ads</span> */}
             </div>
         );
     }

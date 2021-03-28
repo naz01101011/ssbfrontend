@@ -14,9 +14,9 @@ const Contact = () => {
                     <div className='col s12 m8'>
                         <ContactForm />
                         <h4>Email</h4>
-                        <p>0746 773 513</p>
+                        <p>redactie@stiridesibiu.ro</p>
                         <h4>Telefon</h4>
-                        <p>stiridesibiu@gmail.com</p>
+                        <p>0746 773 513</p>
                     </div>
                     <div className='col s12 m4'>
                         <SideBar />
