@@ -17,7 +17,7 @@ const Home = () => {
 
     useEffect(() => {
 
-        const query = '*[_type == "post"] | order(publishedAt desc) { _id, title, mainImage, publishedAt, "categ": categories[0]->title, "authorName": authors[0].author->name, "slug": slug.current, excerpt }[0...30]';
+        const query = '*[_type == "post"] | order(publishedAt desc) { _id, title, mainImage, publishedAt, "categ": categories[0]->title, "authorName": authors[0].author->name, "slug": slug.current, excerpt, pinned }[0...30]';
         const fetchData = () => {
             Client.fetch(query)
                 .then(res => {

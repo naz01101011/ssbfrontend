@@ -47,6 +47,14 @@ nav {
   box-shadow: none !important;
 }
 
+.newslistitem {
+  list-style: none;
+}
+
+.pinnedPost h5 {
+  color: #f4511e;
+}
+
 .brand-logo {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
