@@ -53,7 +53,7 @@ function App() {
             fontSize: "13px"
           }}
           expires={1}
-          debug={true}
+          debug={false}
         >
           Acest site foloseste cookies pentru a imbunatatii experienta
           cititorilor. Vezi aici{" "}
