@@ -10,10 +10,20 @@ const Home = () => {
     const [initNews, setInitNews] = useState([]);
     const [loaded, setLoaded] = useState(false);
 
-    const latestNewsData = initNews.slice(0, 6);
-    const highlightNewsData = initNews.slice(6, 7);
-    const blogListData = initNews.slice(8, 20);
-    const olderArticles = initNews.slice(21, 30)
+    const pinnedPost = initNews.find(post => post.pinned === true);
+    const blogNews = initNews.filter(post => post.pinned !== true);
+
+    let latestNewsData = blogNews.slice(0, 6);
+    let highlightNewsData = blogNews.slice(6, 7);
+    let blogListData = blogNews.slice(7, 20);
+    let olderArticles = blogNews.slice(20, 30)
+
+    if (pinnedPost !== undefined) {
+        latestNewsData = blogNews.slice(0, 5);
+        highlightNewsData = blogNews.slice(5, 6);
+        blogListData = blogNews.slice(6, 19);
+        olderArticles = blogNews.slice(19, 29)
+    }
 
     useEffect(() => {
 
@@ -37,7 +47,7 @@ const Home = () => {
         <main className='wrapper'>
             {loaded ? (
                 <div>
-                    <LatestNews data={latestNewsData}/>
+                    <LatestNews data={latestNewsData} pinned={pinnedPost}/>
                     <Highlight data={highlightNewsData}/>
                     
                     <div className='container section row'>

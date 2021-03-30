@@ -10,17 +10,11 @@ import NewsListItem from './NewsListItem';
 
 const LatestNews = (props) => {
     // console.log(props)
+    let pinnedPost = props.pinned;
     let mainPost = props.data[0]
-    let nextPosts = props.data.slice(1, 6); 
+    let nextPosts = props.data.slice(1); 
 
-    // check for nextPosts post that has pinned true, if existing
-    let pinnedPost = nextPosts.filter(post => post.pinned === true);
-    console.log(pinnedPost)
-
-    let listPosts = nextPosts.filter(post => post.pinned !== true);
-    console.log(listPosts)
-
-    // console.log(mainPost)
+        // console.log(pinnedPost.title)
     return (
         <div className='container'>
             <div className='row section flex'>
@@ -51,9 +45,9 @@ const LatestNews = (props) => {
                 </div>
                 <div className="col m12 l4">
 
-                {pinnedPost.length > 0 &&
+                {pinnedPost !== undefined &&
                 <div className="pinnedPost">
-                    <NewsListItem  title={pinnedPost[0].title} key={pinnedPost[0]._id} slug={pinnedPost[0].slug} image={pinnedPost[0].mainImage} cat={pinnedPost[0].categ} author={pinnedPost[0].authorName} date={pinnedPost[0].publishedAt} hasImages={false} hasExcerpt={false} excerpt={pinnedPost[0].excerpt}/>
+                    <NewsListItem  title={pinnedPost.title} key={pinnedPost._id} slug={pinnedPost.slug} image={pinnedPost.mainImage} cat={pinnedPost.categ} author={pinnedPost.authorName} date={pinnedPost.publishedAt} hasImages={false} hasExcerpt={false} excerpt={pinnedPost.excerpt}/>
                 </div>
                 }
 
