@@ -86,6 +86,7 @@ const Article = (props) => {
                     <meta name="og:title" property="og:title" content={title} />
                     <meta name="og:image" property="og:image" content={urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url()} />
                     <meta name="og:description" property="og:description" content={excerpt} />
+                    <meta name="fb:app_id" property="fb:app_id" content="499891274479754" />
                 </Helmet>
 
                 {loaded ? (
