@@ -80,9 +80,6 @@ const Article = (props) => {
                     <title>{title}</title>
                     <meta name="description" content={excerpt} />
                     <meta name="keywords" content={title} />
-                    <meta name="author" content="Stiri de Sibiu" />
-                    <meta name="copyright" content="© 2021 Stiri de Sibiu" />
-                    <meta name="application-name" content="Stiri de Sibiu" />
                     <link rel="canonical" href={articleUrl} />
 
                     <meta property="og:type" content="article" />
@@ -90,7 +87,6 @@ const Article = (props) => {
                     <meta property="og:title" content={title} />
                     <meta property="og:image" content={urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url()} />
                     <meta property="og:description" content={excerpt} />
-                    <meta property="fb:app_id" content="499891274479754" />
                 </Helmet>
 
                 {loaded ? (
