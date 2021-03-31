@@ -79,14 +79,18 @@ const Article = (props) => {
                 <Helmet>
                     <title>{title}</title>
                     <meta name="description" content={excerpt} />
+                    <meta name="keywords" content={title} />
+                    <meta name="author" content="Stiri de Sibiu" />
+                    <meta name="copyright" content="© 2021 Stiri de Sibiu" />
+                    <meta name="application-name" content="Stiri de Sibiu" />
                     <link rel="canonical" href={articleUrl} />
 
-                    <meta name="og:type" property="og:type" content="article" />
-                    <meta name="og:url" property="og:url" content={articleUrl} />
-                    <meta name="og:title" property="og:title" content={title} />
-                    <meta name="og:image" property="og:image" content={urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url()} />
-                    <meta name="og:description" property="og:description" content={excerpt} />
-                    <meta name="fb:app_id" property="fb:app_id" content="499891274479754" />
+                    <meta property="og:type" content="article" />
+                    <meta property="og:url" content={articleUrl} />
+                    <meta property="og:title" content={title} />
+                    <meta property="og:image" content={urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url()} />
+                    <meta property="og:description" content={excerpt} />
+                    <meta property="fb:app_id" content="499891274479754" />
                 </Helmet>
 
                 {loaded ? (
