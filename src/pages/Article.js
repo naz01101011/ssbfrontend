@@ -6,31 +6,36 @@ import urlFor from '../components/ImgBuilder'
 import SideBar from '../components/SideBar';
 import BlockContent from '@sanity/block-content-to-react';
 import {Link} from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 const Article = (props) => {
     const [hasError, setHasError] = useState(false);
     const [body, setBody] = useState('');
+    const [excerpt, setExcerpt] = useState('');
     //const [id, setId] = useState('');
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [cat, setCat] = useState('');
     const [img, setImg] = useState({});
+    const [articleUrl, setArticleUrl] = useState({});
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
 
         const fetchData = () => {
             let slug = props.match.params.article_slug
-            let query = '*[slug.current == "' + slug + '"]{ _id, title, mainImage, publishedAt, "categ": categories[0]->title, body}';
+            let query = '*[slug.current == "' + slug + '"]{ _id, title, mainImage, publishedAt, "categ": categories[0]->title, body, excerpt}';
     
             Client.fetch(query)
             .then(res => {
                 setTitle(res[0].title)
                 setBody(res[0].body)
+                setExcerpt(res[0].excerpt[0].children[0].text)
                 //setId(res[0]._id)
                 setDate(SerializeDate(res[0].publishedAt))
                 setCat(res[0].categ)
                 setImg(res[0].mainImage)
+                setArticleUrl("https://www.stiridesibiu.ro/stiri/" + slug)
                 setLoaded(true);
             })
             .catch(err => {
@@ -70,6 +75,19 @@ const Article = (props) => {
     } else {
         return (
             <main className='container section'>
+                
+                <Helmet>
+                    <title>{title}</title>
+                    <meta name="description" content={excerpt} />
+                    <link rel="canonical" href={articleUrl} />
+
+                    <meta name="og:type" property="og:type" content="article" />
+                    <meta name="og:url" property="og:url" content={articleUrl} />
+                    <meta name="og:title" property="og:title" content={title} />
+                    <meta name="og:image" property="og:image" content={urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url()} />
+                    <meta name="og:description" property="og:description" content={excerpt} />
+                </Helmet>
+
                 {loaded ? (
                     <div>  
                       <span><Link to='/'>Știri de Sibiu</Link> > Știri</span>
