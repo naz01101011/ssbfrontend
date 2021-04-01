@@ -39,6 +39,13 @@ const Rectangle = () => {
                     style={{ display: 'block' }}
                     responsive='true'
                 />
+                <AdSense.Google 
+                    client='ca-pub-2723789094037700'
+                    slot='7132965898'
+                    format='auto'
+                    style={{ display: 'block' }}
+                    responsive='true'
+                />
             </div>
         );
     }
