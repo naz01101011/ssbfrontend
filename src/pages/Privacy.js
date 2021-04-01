@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Client from '../components/Client'
 import BlockContent from '@sanity/block-content-to-react';
 import {Link} from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 const Privacy = (props) => {
     const [hasError, setHasError] = useState(false);
@@ -58,6 +59,12 @@ const Privacy = (props) => {
     } else {
         return (
             <main className='container section'>
+            <Helmet>
+                    <title>Politica de Confidentialitate</title>
+                    <meta name="description" content="Politica de confidentialitate a site-ului Stiri de Sibiu" />
+                    <meta name="keywords" content="stiri sibiu confidentialitate GDPR" />
+                    <link rel="canonical" href="https://www.stiridesibiu.ro/confidentialitate" />
+            </Helmet>
                 {loaded ? (
                     <div>  
                       <span><Link to='/'>Știri de Sibiu</Link> > Confidentialitate</span>

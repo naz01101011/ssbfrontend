@@ -4,6 +4,7 @@ import Highlight from '../components/HighlightNews';
 import NewsList from '../components/NewsList';
 import Client from '../components/Client';
 import SideBar from '../components/SideBar';
+import Helmet from 'react-helmet';
 
 const Home = () => {
 
@@ -45,6 +46,12 @@ const Home = () => {
 
     return (
         <main className='wrapper'>
+            <Helmet>
+                    <title>Stiri de Sibiu</title>
+                    <meta name="description" content="Pagina principala Stiri de Sibiu. Cele mai importante stiri din judetul Sibiu, oferite respectand etica si deontologia jurnalistica." />
+                    <meta name="keywords" content="stiri sibiu jurnalism romania" />
+                    <link rel="canonical" href="https://www.stiridesibiu.ro" />
+            </Helmet>
             {loaded ? (
                 <div>
                     <LatestNews data={latestNewsData} pinned={pinnedPost}/>

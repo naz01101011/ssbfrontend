@@ -4,6 +4,7 @@ import NewsList from "../components/NewsList";
 import SideBar from "../components/SideBar";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import Helmet from 'react-helmet';
 
 const Stiri = () => {
   const [archive, setArchive] = useState([]);
@@ -33,6 +34,12 @@ const Stiri = () => {
 
   return (
     <main className="container">
+            <Helmet>
+                    <title>Arhiva Stiri de Sibiu</title>
+                    <meta name="description" content="Cauta articolele publicate de Stiri de Sibiu" />
+                    <meta name="keywords" content="stiri sibiu arhiva" />
+                    <link rel="canonical" href="https://www.stiridesibiu.ro/stiri" />
+            </Helmet>
       {loaded ? (
         <div>
           <div className="row section">

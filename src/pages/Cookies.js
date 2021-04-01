@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Client from '../components/Client'
 import BlockContent from '@sanity/block-content-to-react';
 import {Link} from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 const Cookies = (props) => {
     const [hasError, setHasError] = useState(false);
@@ -58,6 +59,12 @@ const Cookies = (props) => {
     } else {
         return (
             <main className='container section'>
+            <Helmet>
+                    <title>Politica de Cookies</title>
+                    <meta name="description" content="Politica de cookies a site-ului Stiri de Sibiu" />
+                    <meta name="keywords" content="stiri sibiu cookies GDPR" />
+                    <link rel="canonical" href="https://www.stiridesibiu.ro/cookies" />
+            </Helmet>
                 {loaded ? (
                     <div>  
                       <span><Link to='/'>Știri de Sibiu</Link> > Cookies</span>
