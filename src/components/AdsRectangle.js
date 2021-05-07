@@ -31,7 +31,7 @@ const Rectangle = () => {
     } else {
         return (
             <div className='center grey lighten-4 adcontainer'>
-                <span className='adlabel left-align'>Google Ads</span>
+                <span className='adlabel left-align'>Publicitate Google</span>
                 <AdSense.Google 
                     client='ca-pub-2723789094037700'
                     slot='4430780933'
