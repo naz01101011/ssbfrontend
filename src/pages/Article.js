@@ -11,7 +11,7 @@ import Helmet from 'react-helmet';
 const Article = (props) => {
     const [hasError, setHasError] = useState(false);
     const [body, setBody] = useState('');
-    const [excerpt, setExcerpt] = useState('');
+    const [excerpt, setExcerpt] = useState('No Excerpt by default');
     //const [id, setId] = useState('');
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
@@ -19,6 +19,7 @@ const Article = (props) => {
     const [img, setImg] = useState({});
     const [articleUrl, setArticleUrl] = useState({});
     const [loaded, setLoaded] = useState(false);
+    const [error, setError] = useState('');
 
     useEffect(() => {
 
@@ -30,7 +31,11 @@ const Article = (props) => {
             .then(res => {
                 setTitle(res[0].title)
                 setBody(res[0].body)
-                setExcerpt(res[0].excerpt[0].children[0].text)
+                if (typeof res[0].excerpt != 'undefined') {
+                    setExcerpt(res[0].excerpt[0].children[0].text)
+                } else {
+                    setExcerpt('No excerpt!')
+                }
                 //setId(res[0]._id)
                 setDate(SerializeDate(res[0].publishedAt))
                 setCat(res[0].categ)
@@ -40,6 +45,7 @@ const Article = (props) => {
             })
             .catch(err => {
                 setHasError(true);
+                setError(err)
             })
         };
 
@@ -69,7 +75,8 @@ const Article = (props) => {
     if (hasError) {
         return (
             <div className='container section'>
-                <h3>Error</h3>
+                <h3>Error!</h3>
+                <p>{error}</p>
             </div>
         )    
     } else {
