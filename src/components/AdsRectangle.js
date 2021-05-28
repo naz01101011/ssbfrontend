@@ -26,13 +26,8 @@ const Rectangle = () => {
                     )
                 })}
 
-            </div>
-        );
-    } else {
-        return (
-            <div className='center grey lighten-4 adcontainer'>
-                <span className='adlabel left-align'>Publicitate Google</span>
-                <AdSense.Google 
+               <span className='adlabel left-align'>Publicitate Google</span>
+                <AdSense.Google
                     client='ca-pub-2723789094037700'
                     slot='4430780933'
                     format='auto'
@@ -40,7 +35,29 @@ const Rectangle = () => {
                     responsive='true'
                 />
                 <br />
-                <AdSense.Google 
+                <AdSense.Google
+                    client='ca-pub-2723789094037700'
+                    slot='7132965898'
+                    format='auto'
+                    style={{ display: 'block' }}
+                    responsive='true'
+                />
+            </div>
+
+        );
+    } else {
+        return (
+            <div className='center grey lighten-4 adcontainer'>
+                <span className='adlabel left-align'>Publicitate Google</span>
+                <AdSense.Google
+                    client='ca-pub-2723789094037700'
+                    slot='4430780933'
+                    format='auto'
+                    style={{ display: 'block' }}
+                    responsive='true'
+                />
+                <br />
+                <AdSense.Google
                     client='ca-pub-2723789094037700'
                     slot='7132965898'
                     format='auto'
