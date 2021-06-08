@@ -57,15 +57,7 @@ const AppFooter = () => {
       </div>
       <div className="footer-copyright">
         <div className="container deep-orange-text">
-          © 2021 Stiri de Sibiu /*
-          <a className="grey-text text-darken-2 right" href="/sitemap.xml">
-            Harta Siteului
-          </a>
-          <span className="right" style={{ marginRight: 5, marginLeft: 5 }}>
-            {" "}
-            |{" "}
-          </span>
-          */
+          © 2021 Stiri de Sibiu
           <Link
             className="grey-text text-darken-2 right"
             to="/confidentialitate"
@@ -86,4 +78,3 @@ const AppFooter = () => {
 };
 
 export default AppFooter;
-
