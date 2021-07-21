@@ -1,0 +1,10 @@
+:root {
+  --accent-main: #f4511e;
+  --accent-secondary: ;
+  --title-color: #333333;
+  --body-color: ;
+  --calendar-tile-active-bg: var(--accent-main);
+  --calendar-tile-active-fg: #ffffff;
+  --calendar-tile-now-bg: #ececec;
+  --calendar-tile-now-fg: #000000;
+}

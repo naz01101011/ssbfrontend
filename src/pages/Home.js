@@ -8,23 +8,12 @@ import Helmet from 'react-helmet';
 
 const Home = () => {
 
-    const [initNews, setInitNews] = useState([]);
+    const [latestNewsData, setLatestNewsData] = useState('');
+    const [highlightNewsData, setHighlightNewsData] = useState('');
+    const [blogListData, setBlogListData] = useState('');
+    const [olderArticles, setOlderArticles] = useState('');
+    const [pinnedPost, setPinnedPost] = useState('');
     const [loaded, setLoaded] = useState(false);
-
-    const pinnedPost = initNews.find(post => post.pinned === true);
-    const blogNews = initNews.filter(post => post.pinned !== true);
-
-    let latestNewsData = blogNews.slice(0, 6);
-    let highlightNewsData = blogNews.slice(6, 7);
-    let blogListData = blogNews.slice(7, 20);
-    let olderArticles = blogNews.slice(20, 30)
-
-    if (pinnedPost !== undefined) {
-        latestNewsData = blogNews.slice(0, 5);
-        highlightNewsData = blogNews.slice(5, 6);
-        blogListData = blogNews.slice(6, 19);
-        olderArticles = blogNews.slice(19, 29)
-    }
 
     useEffect(() => {
 
@@ -33,7 +22,20 @@ const Home = () => {
             Client.fetch(query)
                 .then(res => {
                     // console.log(res);
-                    setInitNews(res)
+                    const pinned = res.find(post => post.pinned === true);
+                    setPinnedPost(pinned);
+                    const blogNews = res.filter(post => post.pinned !== true);
+                    if (pinned !== undefined) {
+                        setLatestNewsData(blogNews.slice(0, 5));
+                        setHighlightNewsData(blogNews.slice(5, 6));
+                        setBlogListData(blogNews.slice(6, 19));
+                        setOlderArticles(blogNews.slice(19, 29));
+                    } else {
+                        setLatestNewsData(blogNews.slice(0, 6));
+                        setHighlightNewsData(blogNews.slice(6, 7));
+                        setBlogListData(blogNews.slice(7, 20));
+                        setOlderArticles(blogNews.slice(20, 30));
+                    }
                     setLoaded(true)
                 })
         }
