@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import getYouTubeId from 'get-youtube-id';
 import YouTube from 'react-youtube';
+import ReactPlayer from "react-player"
 
 const Article = (props) => {
     const [hasError, setHasError] = useState(false);
@@ -66,6 +67,13 @@ const Article = (props) => {
                 const { url } = node
                 const id = getYouTubeId(url)
                 return (<YouTube videoId={id} />)
+            },
+            fbvideo: ({ node }) => {
+                const {url} = node
+                return (<ReactPlayer
+                    url={url}
+                    controls
+                  />)
             }
         },
         marks: {
