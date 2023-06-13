@@ -176,3 +176,8 @@ textarea:focus {
     font-size: 1.3em;
   }
 }
+
+.topflag {
+  display: flex;
+  justify-content: center;
+}

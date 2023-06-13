@@ -7,8 +7,8 @@ import AdsLeaderboard from '../components/AdsLeaderboard';
 const AppHeader = (props) => {
     return (
         <header>
-            <div>
-              <a href='https://www.sibfest.ro' target={'_blank'} rel="noopener noreferrer"> <img src='./fits.png' width={1170} height={90} alt="FITS 2023" /></a>
+            <div className='topflag'>
+              <a href='https://www.sibfest.ro' target={'_blank'} rel='noopener noreferrer'> <img src='./fits.png' width={1170} height={90} alt="FITS 2023" /></a>
             </div>
             <nav>
                 <div className="nav-wrapper grey lighten-4">
