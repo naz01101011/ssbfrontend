@@ -7,6 +7,9 @@ import AdsLeaderboard from '../components/AdsLeaderboard';
 const AppHeader = (props) => {
     return (
         <header>
+            <div>
+              <a url='https://www.sibfest.ro' target={'_blank'}> <img src='./fits.png' width={1170} height={90} /></a>
+            </div>
             <nav>
                 <div className="nav-wrapper grey lighten-4">
                     <div className='container'>
@@ -27,7 +30,7 @@ const AppHeader = (props) => {
                 </div>
             </nav>
             <AdsLeaderboard position='large-top-leaderboard' googleads='false'/>
-        </header>   
+        </header>
     );
 }
 
