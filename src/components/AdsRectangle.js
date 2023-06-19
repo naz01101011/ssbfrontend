@@ -15,7 +15,7 @@ const Rectangle = () => {
     if (currentBanners.length !== 0) {
         return (
             <div className='center grey lighten-4 adcontainer'>
-                <span className='adlabel left-align'>Pubicitate</span>
+                <span className='adlabel left-align'>Publicitate</span>
                 {currentBanners.map((ad, index) => {
                     return (
                         <div key={ad._id} >
