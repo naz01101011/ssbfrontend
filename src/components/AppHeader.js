@@ -9,9 +9,9 @@ const AppHeader = (props) => {
         <header>
             <nav>
                 <div className="nav-wrapper grey lighten-4">
-                  <div className='topflag'>
+                  {/*<div className='topflag'>
                     <a href='https://www.sibfest.ro' target={'_blank'} rel='noopener noreferrer'> <img src='./fits.png' width={1170} height={90} alt="FITS 2023" /></a>
-                  </div>
+                  </div>*/}
                   <div className='container'>
                       <Link className="brand-logo deep-orange-text text-darken-1" to='/' >știri<span style={{color:"grey"}}>de</span>Sibiu<span style={{color:"grey"}}>.ro</span></Link>
                       <ul id="nav-mobile" className="right hide-on-med-and-down">
