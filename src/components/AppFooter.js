@@ -75,7 +75,7 @@ const AppFooter = () => {
             {" "}
             |{" "}
           </span>
-          <Link className="grey-text text-darken-2 right" to="https://sitemap.stiridesibiu.ro/sitemap">
+          <Link className="grey-text text-darken-2 right" to="/sitemap">
             Sitemap
           </Link>
         </div>

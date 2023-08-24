@@ -41,6 +41,10 @@ function App() {
           <Route path="/search" component={Search} />
           <Route path="/stiri/:article_slug" component={Article} />
           <Route path="/stiri" component={Stiri} />
+          <Route path='/sitemap' component={() => {
+              window.location.href = 'https://sitemap.stiridesibiu.ro/sitemap';
+              return null;
+          }}/>
         </Switch>
         <AppFooter />
         <CookieConsent
@@ -60,7 +64,7 @@ function App() {
           <Link className="orange-text text-darken-4" to="/cookies">
             Politica de Cookies
           </Link>.{" "}
-          Citeste si{" "} 
+          Citeste si{" "}
           <Link className="orange-text text-darken-4" to="/confidentialitate">
             Politica de Confidențialitate
           </Link>{" "}
