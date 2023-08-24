@@ -71,6 +71,13 @@ const AppFooter = () => {
           <Link className="grey-text text-darken-2 right" to="/cookies">
             Politică de Cookies
           </Link>
+          <span className="right" style={{ marginRight: 5, marginLeft: 5 }}>
+            {" "}
+            |{" "}
+          </span>
+          <Link className="grey-text text-darken-2 right" to="https://sitemap.stiridesibiu.ro/sitemap">
+            Sitemap
+          </Link>
         </div>
       </div>
     </footer>
