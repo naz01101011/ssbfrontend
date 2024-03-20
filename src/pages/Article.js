@@ -119,7 +119,7 @@ const Article = (props) => {
                         <div className='row section'>
                             <div className='col s12 m8'>
                                 {img ? (
-                                    <img className='responsive-img' src={urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url()} alt={img.alt} />
+                                    <img className='responsive-img' width={900} height={540} src={urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url()} alt={img.alt} />
                                 ) : (
                                     <span className='info grey lighten-4  grey-text text-darken-2'>Articol fără imagine</span>
                                 )}

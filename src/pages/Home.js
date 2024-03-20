@@ -58,7 +58,7 @@ const Home = () => {
                 <div>
                     <LatestNews data={latestNewsData} pinned={pinnedPost}/>
                     <Highlight data={highlightNewsData}/>
-                    
+
                     <div className='container section row'>
                         <div className='col s12 m8'>
                             <NewsList list={blogListData} images='true' excerpt='true'/>
@@ -67,14 +67,13 @@ const Home = () => {
                             <SideBar list={olderArticles}/>
                         </div>
                     </div>
-                    
+
                 </div>
             ) : (
                 <div>
-                    <h4 className='center'>Aduc ultimele știri...</h4>
                 </div>
             )}
-            
+
         </main>
     )
 }
