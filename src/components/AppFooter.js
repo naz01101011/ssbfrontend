@@ -52,18 +52,19 @@ const AppFooter = () => {
             <span className="grey-text text-darken-2">
               <b>Telefon:</b> 0746.773.513
             </span>
-            <br />
-            <span className="grey-text text-darken-2">
-              <a href="https://trafic.ro/statistici/stiridesibiu.ro" rel="noopener noreferrer" target="_blank">
-                <img src="https://trafic.ro/images/trafic-ro-logo.png" title="Trafic.ro - Clasamente si Statistici" style={{ height:"25px" }} alt="Trafic.ro"/>
-            </a>
-            </span>
           </div>
         </div>
       </div>
       <div className="footer-copyright">
         <div className="container deep-orange-text">
           © 2021 Stiri de Sibiu
+          <a href="https://trafic.ro/statistici/stiridesibiu.ro" rel="noopener noreferrer" target="_blank">
+            <img src="https://trafic.ro/images/trafic-ro-logo_transparent.png" title="Trafic.ro - Clasamente si Statistici" style={{ height:"25px" }} alt="Trafic.ro"/>
+          </a>
+          <span className="right" style={{ marginRight: 5, marginLeft: 5 }}>
+            {" "}
+            |{" "}
+          </span>
           <Link
             className="grey-text text-darken-2 right"
             to="/confidentialitate"
