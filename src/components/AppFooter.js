@@ -54,7 +54,9 @@ const AppFooter = () => {
             </span>
             <br />
             <span className="grey-text text-darken-2">
-              <a href="https://trafic.ro/statistici/stiridesibiu.ro" rel="noopener noreferrer" target="_blank">Trafic.ro</a>
+              <a href="https://trafic.ro/statistici/stiridesibiu.ro" rel="noopener noreferrer" target="_blank">
+                <img src="https://trafic.ro/images/trafic-ro-logo.png" title="Trafic.ro - Clasamente si Statistici" style={{ height:"25px" }} alt="Trafic.ro"/>
+            </a>
             </span>
           </div>
         </div>
