@@ -52,9 +52,10 @@ const AppFooter = () => {
             <span className="grey-text text-darken-2">
               <b>Telefon:</b> 0746.773.513
             </span>
-            <Link className="grey-text text-darken-2" to="https://trafic.ro/statistici/stiridesibiu.ro">
-              Trafic.ro
-            </Link>
+            <br />
+            <span className="grey-text text-darken-2">
+              <a href="https://trafic.ro/statistici/stiridesibiu.ro" rel="noopener noreferrer" target="_blank">Trafic.ro</a>
+            </span>
           </div>
         </div>
       </div>
