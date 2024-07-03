@@ -27,11 +27,8 @@ const AppHeader = (props) => {
                 </div>
             </nav>
             {/*<div className='topflag'>
-              <a href='https://www.sibfest.ro' target={'_blank'} rel='noopener noreferrer'> <img src='./fits.png' width={1170} height={90} alt="FITS 2023" /></a>
-            </div>*/}
-            <div className='topflag'>
               <a href='https://www.sibfest.ro' target={'_blank'} rel='noopener noreferrer'> <img src='./fits2024.png' width={1170} height={90} alt="FITS 2024" /></a>
-            </div>
+            </div>*/}
             <AdsLeaderboard position='large-top-leaderboard' googleads='false'/>
         </header>
     );
