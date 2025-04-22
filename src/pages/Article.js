@@ -81,7 +81,7 @@ const Article = (props) => {
                 <span style={{ fontWeight: 'bold' }}>{props.children}</span>
             ),
             link: props => (
-                <a href={props.mark.href} target='_blank'>{props.children}</a>
+                <a href={props.mark.href} target='_blank' rel='noopener'>{props.children}</a>
             )
         }
 
