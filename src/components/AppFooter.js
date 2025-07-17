@@ -42,7 +42,7 @@ const AppFooter = () => {
                 </Link>
               </li>
               <li>
-                RSS
+                <a className='grey-text text-darken-2' href='https://rss.stiridesibiu.ro' target={'_blank'} rel='noopener noreferrer'>RSS</a>
               </li>
             </ul>
           </div>
