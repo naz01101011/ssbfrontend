@@ -23,7 +23,7 @@ const AppHeader = (props) => {
                               <Link className='grey-text text-darken-2' to='/contact'>Contact</Link>
                           </li>
                           <li>
-                              <Link className='grey-text text-darken-2' to='https://rss.stiridesibiu.ro'>RSS</Link>
+                              <a className='grey-text text-darken-2' href='https://rss.stiridesibiu.ro' target={'_blank'} rel='noopener noreferrer'>RSS</a>
                           </li>
                       </ul>
                   </div>
