@@ -40,6 +40,10 @@ const AppFooter = () => {
                 <Link className="grey-text text-darken-2" to="/contact">
                   Contact
                 </Link>
+              <li>
+                <Link className="grey-text text-darken-2" to="https://rss.stiridesibiu.ro">
+                  RSS
+                </Link>
               </li>
             </ul>
           </div>
