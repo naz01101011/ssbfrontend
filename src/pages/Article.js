@@ -10,6 +10,7 @@ import Helmet from 'react-helmet';
 import getYouTubeId from 'get-youtube-id';
 import YouTube from 'react-youtube';
 import ReactPlayer from "react-player"
+import AdsLeaderboard from '../components/AdsLeaderboard';
 
 const Article = (props) => {
     const [hasError, setHasError] = useState(false);
@@ -126,6 +127,8 @@ const Article = (props) => {
 
 
                                 <span className='info grey lighten-4  deep-orange-text text-darken-1'>{date} <span className='deep-orange darken-1'>{cat}</span></span>
+
+                                <AdsLeaderboard position='mid-leaderboard' googleads='true'/>
 
                                 <BlockContent blocks={body} serializers={serializers} />
                             </div>
