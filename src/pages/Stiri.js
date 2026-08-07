@@ -10,27 +10,40 @@ const Stiri = () => {
   const [archive, setArchive] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [value, setValue] = useState(new Date());
-  const [theDate, setTheDate] = useState();
+  const [hasError, setHasError] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    setTheDate(
-        value.getFullYear() + '-' + ('0' + (value.getMonth()+1)).slice(-2) + '-' + ('0' + value.getDate()).slice(-2)
-    );
+    const formattedDate =
+        value.getFullYear() + '-' + ('0' + (value.getMonth()+1)).slice(-2) + '-' + ('0' + value.getDate()).slice(-2);
     const query =
       '*[_type == "post" && publishedAt >= "' +
-      theDate +
+      formattedDate +
       'T00:00:00.000Z" && publishedAt <= "' +
-      theDate +
+      formattedDate +
       'T23:59:59.000Z"] | order(publishedAt desc) { _id, title, publishedAt, "categ": categories[0]->title, "authorName": authors[0].author->name, "slug": slug.current}';
     const fetchData = () => {
-      Client.fetch(query).then((res) => {
-        setArchive(res);
-        setLoaded(true);
-      });
+      Client.fetch(query)
+        .then((res) => {
+          setArchive(res);
+          setLoaded(true);
+        })
+        .catch((err) => {
+          setHasError(true);
+          setError(err);
+        });
     };
     fetchData();
-    console.log(theDate);
-  }, [value, theDate]);
+  }, [value]);
+
+  if (hasError) {
+    return (
+      <main className="container section">
+        <h3>Error!</h3>
+        <p>{String(error)}</p>
+      </main>
+    )
+  }
 
   return (
     <main className="container">
