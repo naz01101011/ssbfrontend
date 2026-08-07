@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import AdsContext from '../context/AdsContext';
 import urlFor from './ImgBuilder';
 import AdSense from 'react-adsense';
+import ErrorBoundary from './ErrorBoundary';
 
 const Rectangle = () => {
     let ads = useContext(AdsContext)
@@ -27,21 +28,25 @@ const Rectangle = () => {
                 })}
 
                <span className='adlabel left-align'>Publicitate Google</span>
-                <AdSense.Google
-                    client='ca-pub-2723789094037700'
-                    slot='4430780933'
-                    format='auto'
-                    style={{ display: 'block' }}
-                    responsive='true'
-                />
+                <ErrorBoundary>
+                    <AdSense.Google
+                        client='ca-pub-2723789094037700'
+                        slot='4430780933'
+                        format='auto'
+                        style={{ display: 'block' }}
+                        responsive='true'
+                    />
+                </ErrorBoundary>
                 <br />
-                <AdSense.Google
-                    client='ca-pub-2723789094037700'
-                    slot='7132965898'
-                    format='auto'
-                    style={{ display: 'block' }}
-                    responsive='true'
-                />
+                <ErrorBoundary>
+                    <AdSense.Google
+                        client='ca-pub-2723789094037700'
+                        slot='7132965898'
+                        format='auto'
+                        style={{ display: 'block' }}
+                        responsive='true'
+                    />
+                </ErrorBoundary>
             </div>
 
         );
@@ -49,21 +54,25 @@ const Rectangle = () => {
         return (
             <div className='center grey lighten-4 adcontainer'>
                 <span className='adlabel left-align'>Publicitate Google</span>
-                <AdSense.Google
-                    client='ca-pub-2723789094037700'
-                    slot='4430780933'
-                    format='auto'
-                    style={{ display: 'block' }}
-                    responsive='true'
-                />
+                <ErrorBoundary>
+                    <AdSense.Google
+                        client='ca-pub-2723789094037700'
+                        slot='4430780933'
+                        format='auto'
+                        style={{ display: 'block' }}
+                        responsive='true'
+                    />
+                </ErrorBoundary>
                 <br />
-                <AdSense.Google
-                    client='ca-pub-2723789094037700'
-                    slot='7132965898'
-                    format='auto'
-                    style={{ display: 'block' }}
-                    responsive='true'
-                />
+                <ErrorBoundary>
+                    <AdSense.Google
+                        client='ca-pub-2723789094037700'
+                        slot='7132965898'
+                        format='auto'
+                        style={{ display: 'block' }}
+                        responsive='true'
+                    />
+                </ErrorBoundary>
             </div>
         );
     }
