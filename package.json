@@ -15,7 +15,6 @@
     "react": "^16.12.0",
     "react-adsense": "^0.1.0",
     "react-calendar": "^3.2.1",
-    "react-clamp": "^1.0.5",
     "react-cookie-consent": "^6.2.2",
     "react-dev-utils": "^12.0.1",
     "react-dom": "^16.12.0",
@@ -49,5 +48,10 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "resolutions": {
+    "js-cookie": "^3.0.8",
+    "shell-quote": "^1.8.5",
+    "websocket-driver": "^0.7.5"
+  }
 }
