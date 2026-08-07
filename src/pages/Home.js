@@ -14,6 +14,8 @@ const Home = () => {
     const [olderArticles, setOlderArticles] = useState('');
     const [pinnedPost, setPinnedPost] = useState('');
     const [loaded, setLoaded] = useState(false);
+    const [hasError, setHasError] = useState(false);
+    const [error, setError] = useState('');
 
     useEffect(() => {
 
@@ -38,6 +40,10 @@ const Home = () => {
                     }
                     setLoaded(true)
                 })
+                .catch(err => {
+                    setHasError(true);
+                    setError(err)
+                })
         }
 
         // console.log(initNews)
@@ -45,6 +51,15 @@ const Home = () => {
 
         fetchData();
     }, [])
+
+    if (hasError) {
+        return (
+            <main className='container section'>
+                <h3>Error!</h3>
+                <p>{String(error)}</p>
+            </main>
+        )
+    }
 
     return (
         <main className='wrapper'>
