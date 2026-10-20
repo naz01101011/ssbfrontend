@@ -15,7 +15,7 @@ import AdsLeaderboard from '../components/AdsLeaderboard';
 const Article = (props) => {
     const [hasError, setHasError] = useState(false);
     const [body, setBody] = useState('');
-    const [excerpt, setExcerpt] = useState('No Excerpt by default');
+    const [excerpt, setExcerpt] = useState('');
     //const [id, setId] = useState('');
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
@@ -24,22 +24,23 @@ const Article = (props) => {
     const [articleUrl, setArticleUrl] = useState({});
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState('');
+    const [notFound, setNotFound] = useState(false);
 
     useEffect(() => {
 
         const fetchData = () => {
             let slug = props.match.params.article_slug
-            let query = '*[slug.current == "' + slug + '"]{ _id, title, mainImage, publishedAt, "categ": categories[0]->title, body, excerpt}';
+            let query = '*[slug.current == $slug]{ _id, title, mainImage, publishedAt, "categ": categories[0]->title, body, excerpt}';
 
-            Client.fetch(query)
+            Client.fetch(query, { slug })
                 .then(res => {
+                    if (!res || res.length === 0) {
+                        setNotFound(true)
+                        return
+                    }
                     setTitle(res[0].title)
                     setBody(res[0].body)
-                    if (typeof res[0].excerpt != 'undefined') {
-                        setExcerpt(res[0].excerpt[0].children[0].text)
-                    } else {
-                        setExcerpt('No excerpt!')
-                    }
+                    setExcerpt(res[0].excerpt?.[0]?.children?.[0]?.text || '')
                     //setId(res[0]._id)
                     setDate(SerializeDate(res[0].publishedAt))
                     setCat(res[0].categ)
@@ -49,12 +50,12 @@ const Article = (props) => {
                 })
                 .catch(err => {
                     setHasError(true);
-                    setError(err)
+                    setError(String(err))
                 })
         };
 
         fetchData();
-    }, [props]);
+    }, [props.match.params.article_slug]);
 
     const serializers = {
         types: {
@@ -88,6 +89,19 @@ const Article = (props) => {
 
     }
 
+    if (notFound) {
+        return (
+            <main className='container section'>
+                <Helmet>
+                    <title>Articol negăsit</title>
+                    <meta name="robots" content="noindex" />
+                </Helmet>
+                <h3>Articolul nu a fost găsit</h3>
+                <p><Link to='/'>Înapoi la prima pagină</Link></p>
+            </main>
+        )
+    }
+
     if (hasError) {
         return (
             <div className='container section'>
@@ -108,7 +122,7 @@ const Article = (props) => {
                     <meta property="og:type" content="article" />
                     <meta property="og:url" content={articleUrl} />
                     <meta property="og:title" content={title} />
-                    <meta property="og:image" content={urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url()} />
+                    <meta property="og:image" content={img ? urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url() : ''} />
                     <meta property="og:description" content={excerpt} />
                 </Helmet>
 

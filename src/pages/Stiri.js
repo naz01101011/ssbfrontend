@@ -14,16 +14,12 @@ const Stiri = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const formattedDate =
-        value.getFullYear() + '-' + ('0' + (value.getMonth()+1)).slice(-2) + '-' + ('0' + value.getDate()).slice(-2);
+    const dayStart = new Date(value.getFullYear(), value.getMonth(), value.getDate());
+    const dayEnd = new Date(value.getFullYear(), value.getMonth(), value.getDate() + 1);
     const query =
-      '*[_type == "post" && publishedAt >= "' +
-      formattedDate +
-      'T00:00:00.000Z" && publishedAt <= "' +
-      formattedDate +
-      'T23:59:59.000Z"] | order(publishedAt desc) { _id, title, publishedAt, "categ": categories[0]->title, "authorName": authors[0].author->name, "slug": slug.current}';
+      '*[_type == "post" && publishedAt >= $start && publishedAt < $end] | order(publishedAt desc) { _id, title, publishedAt, "categ": categories[0]->title, "authorName": authors[0].author->name, "slug": slug.current}';
     const fetchData = () => {
-      Client.fetch(query)
+      Client.fetch(query, { start: dayStart.toISOString(), end: dayEnd.toISOString() })
         .then((res) => {
           setArchive(res);
           setLoaded(true);

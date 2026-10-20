@@ -7,16 +7,15 @@ const ContactForm = () => {
     
     const sendEmail = (e) => {
         e.preventDefault();
+        const form = e.target;
 
-        Emailjs.sendForm('gmail', 'template_ahw9ywxD', e.target, 'user_CMx2Dfl5w57a4qX0mfJhl')
-            .then((result) => {
-                console.log(result.text);
+        Emailjs.sendForm('gmail', 'template_ahw9ywxD', form, 'user_CMx2Dfl5w57a4qX0mfJhl')
+            .then(() => {
                 setMsg('Mesajul a fost trimis cu succes!');
+                form.reset();
             }, (error) => {
-                console.log(error.text);
-                setMsg(error.text);
-            }, document.getElementById('contactForm').reset()
-            );
+                setMsg(error.text || 'Mesajul nu a putut fi trimis. Încearcă din nou.');
+            });
     }
 
     return (
