@@ -11,6 +11,7 @@ import getYouTubeId from 'get-youtube-id';
 import YouTube from 'react-youtube';
 import ReactPlayer from "react-player"
 import AdsLeaderboard from '../components/AdsLeaderboard';
+import { removeEdgeMeta } from '../edgeMeta';
 
 const Article = (props) => {
     const [hasError, setHasError] = useState(false);
@@ -89,6 +90,11 @@ const Article = (props) => {
 
     }
 
+    // our own tags are rendered once the article (or its absence) is known
+    useEffect(() => {
+        if (loaded || notFound) removeEdgeMeta();
+    }, [loaded, notFound]);
+
     if (notFound) {
         return (
             <main className='container section'>
@@ -113,18 +119,21 @@ const Article = (props) => {
         return (
             <main className='container section'>
 
-                <Helmet>
-                    <title>{title}</title>
-                    <meta name="description" content={excerpt} />
-                    <meta name="keywords" content={title} />
-                    <link rel="canonical" href={articleUrl} />
+                {loaded && (
+                    <Helmet>
+                        <title>{title}</title>
+                        <meta name="description" content={excerpt} />
+                        <meta name="keywords" content={title} />
+                        <link rel="canonical" href={articleUrl} />
 
-                    <meta property="og:type" content="article" />
-                    <meta property="og:url" content={articleUrl} />
-                    <meta property="og:title" content={title} />
-                    <meta property="og:image" content={img ? urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url() : ''} />
-                    <meta property="og:description" content={excerpt} />
-                </Helmet>
+                        <meta property="og:type" content="article" />
+                        <meta property="og:url" content={articleUrl} />
+                        <meta property="og:title" content={title} />
+                        <meta property="og:image" content={img ? urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url() : ''} />
+                        <meta property="og:description" content={excerpt} />
+                        <meta name="twitter:card" content={img ? 'summary_large_image' : 'summary'} />
+                    </Helmet>
+                )}
 
                 {loaded ? (
                     <div>

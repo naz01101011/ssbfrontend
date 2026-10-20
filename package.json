@@ -26,6 +26,7 @@
     "prebuild": "node scripts/generate-sitemap.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:edge": "node --test netlify/edge-functions/lib/meta.test.ts",
     "eject": "react-scripts eject",
     "deploy": "aws s3 cp build/ s3://ssb-web/ --recursive"
   },

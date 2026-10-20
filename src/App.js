@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AppHeader from "./components/AppHeader";
 import Home from "./pages/Home";
@@ -14,7 +14,23 @@ import AppFooter from "./components/AppFooter";
 import CookieConsent from "react-cookie-consent";
 import ConsentContext from "./context/ConsentContext";
 import { hasTrackingConsent, loadTracking } from "./consent";
-import { Link } from "react-router-dom";
+import { removeEdgeMeta } from "./edgeMeta";
+import { Link, useLocation } from "react-router-dom";
+
+// Drops the edge-injected tags of the page we first loaded as soon as the
+// visitor navigates anywhere within the app.
+const EdgeMetaCleanup = () => {
+  const { pathname } = useLocation();
+  const first = useRef(true);
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    removeEdgeMeta();
+  }, [pathname]);
+  return null;
+};
 
 function App() {
   const adsquery = '*[_type == "banner"] | order(publishedAt desc)';
@@ -40,6 +56,7 @@ function App() {
     <AdsContext.Provider value={ads}>
       <ConsentContext.Provider value={consent}>
       <Router>
+        <EdgeMetaCleanup />
         <AppHeader />
         <Switch>
           <Route exact path="/" component={Home} />
