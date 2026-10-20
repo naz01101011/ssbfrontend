@@ -5,18 +5,28 @@ import NewsList from '../components/NewsList';
 import {Link} from 'react-router-dom';
 
 const Search = (props) => {
-    let term = props.location.state.term
+    const term = props.location.state?.term || ''
 
     const [loaded, setLoaded] = useState(false);
     const [results, setResults] = useState([]);
 
     const search = useCallback(() => {
         // console.log(term);
-        let searchQuery = '*[_type == "post" && title match "*' + term + '*"] | order(publishedAt desc) { _id, title, publishedAt, "categ": categories[0]->title, "slug": slug.current}[0...20]'
+        let searchQuery = '*[_type == "post" && title match $pattern] | order(publishedAt desc) { _id, title, publishedAt, "categ": categories[0]->title, "slug": slug.current}[0...20]'
 
-        Client.fetch(searchQuery)
+        if (!term.trim()) {
+            setResults([])
+            setLoaded(true)
+            return
+        }
+
+        Client.fetch(searchQuery, { pattern: '*' + term.trim() + '*' })
         .then(res => {
             setResults(res)
+            setLoaded(true)
+        })
+        .catch(() => {
+            setResults([])
             setLoaded(true)
         })
     }, [term]);
