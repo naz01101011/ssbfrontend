@@ -4,7 +4,7 @@ import Highlight from '../components/HighlightNews';
 import NewsList from '../components/NewsList';
 import Client from '../components/Client';
 import SideBar from '../components/SideBar';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
 

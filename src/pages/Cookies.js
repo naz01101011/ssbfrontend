@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Client from '../components/Client'
 import BlockContent from '@sanity/block-content-to-react';
 import {Link} from 'react-router-dom';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 const Cookies = (props) => {
     const [hasError, setHasError] = useState(false);
