@@ -20,8 +20,8 @@ const Article = (props) => {
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [cat, setCat] = useState('');
-    const [img, setImg] = useState({});
-    const [articleUrl, setArticleUrl] = useState({});
+    const [img, setImg] = useState(null);
+    const [articleUrl, setArticleUrl] = useState('');
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState('');
     const [notFound, setNotFound] = useState(false);
