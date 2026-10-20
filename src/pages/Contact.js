@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import SideBar from '../components/SideBar';
 import ContactForm from '../components/ContactForm';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 const Contact = () => {
     

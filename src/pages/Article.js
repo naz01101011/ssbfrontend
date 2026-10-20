@@ -6,7 +6,7 @@ import urlFor from '../components/ImgBuilder'
 import SideBar from '../components/SideBar';
 import BlockContent from '@sanity/block-content-to-react';
 import { Link } from 'react-router-dom';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import getYouTubeId from 'get-youtube-id';
 import YouTube from 'react-youtube';
 import ReactPlayer from "react-player"

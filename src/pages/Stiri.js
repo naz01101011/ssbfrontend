@@ -4,7 +4,7 @@ import NewsList from "../components/NewsList";
 import SideBar from "../components/SideBar";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 const Stiri = () => {
   const [archive, setArchive] = useState([]);
