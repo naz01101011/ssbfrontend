@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { resetCookieConsentValue } from "react-cookie-consent";
 import AdsLeaderboard from "../components/AdsLeaderboard";
 
 const AppFooter = () => {
@@ -25,6 +26,19 @@ const AppFooter = () => {
                 <Link className="grey-text text-darken-2" to="/cookies">
                   Politică de Cookies
                 </Link>
+              </li>
+              <li>
+                <a
+                  className="grey-text text-darken-2"
+                  href="/cookies"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    resetCookieConsentValue();
+                    window.location.reload();
+                  }}
+                >
+                  Setări cookies
+                </a>
               </li>
               <li>
                 <Link className="grey-text text-darken-2" to="/">
