@@ -1,7 +1,7 @@
 import Client from '../components/Client'
-import imageUrlBuilder from '@sanity/image-url'
+import { createImageUrlBuilder } from '@sanity/image-url'
 
-const builder = imageUrlBuilder(Client)
+const builder = createImageUrlBuilder(Client)
 
 const urlFor = source => {
     return builder.image(source)

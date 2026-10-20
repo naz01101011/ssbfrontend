@@ -12,7 +12,7 @@ const Search = (props) => {
 
     const search = useCallback(() => {
         // console.log(term);
-        let searchQuery = '*[_type == "post" && title match $pattern] | order(publishedAt desc) { _id, title, publishedAt, "categ": categories[0]->title, "slug": slug.current}[0...20]'
+        let searchQuery = '*[_type == "post" && defined(publishedAt) && title match $pattern] | order(publishedAt desc) { _id, title, publishedAt, "categ": categories[0]->title, "slug": slug.current}[0...20]'
 
         if (!term.trim()) {
             setResults([])
