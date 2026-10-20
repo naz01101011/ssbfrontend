@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { resetCookieConsentValue } from "react-cookie-consent";
+import { reopenConsent } from "../consent";
 import AdsLeaderboard from "../components/AdsLeaderboard";
 
 const AppFooter = () => {
@@ -33,8 +33,7 @@ const AppFooter = () => {
                   href="/cookies"
                   onClick={(e) => {
                     e.preventDefault();
-                    resetCookieConsentValue();
-                    window.location.reload();
+                    reopenConsent();
                   }}
                 >
                   Setări cookies

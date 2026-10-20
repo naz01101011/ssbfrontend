@@ -1,4 +1,4 @@
-import { getCookieConsentValue } from "react-cookie-consent";
+import { getCookieConsentValue, resetCookieConsentValue } from "react-cookie-consent";
 
 export const hasTrackingConsent = () => getCookieConsentValue() === "true";
 
@@ -44,4 +44,11 @@ export const loadTracking = () => {
   addScript("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", {
     "data-ad-client": ADSENSE_CLIENT,
   });
+};
+
+// Clears the saved choice and reloads, so the banner reappears and any
+// scripts that were already running are gone.
+export const reopenConsent = () => {
+  resetCookieConsentValue();
+  window.location.reload();
 };

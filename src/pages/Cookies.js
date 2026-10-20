@@ -3,6 +3,7 @@ import Client from '../components/Client'
 import BlockContent from '@sanity/block-content-to-react';
 import {Link} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import CookieDetails from '../components/CookieDetails';
 
 const Cookies = (props) => {
     const [hasError, setHasError] = useState(false);
@@ -72,6 +73,7 @@ const Cookies = (props) => {
                         
                         <div className='row section'>
                             <div className='col s12'>
+                                <CookieDetails />
                                 <BlockContent blocks={body} serializers={serializers}/>
                             </div>
                         </div>
