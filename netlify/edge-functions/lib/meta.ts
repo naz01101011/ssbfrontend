@@ -90,6 +90,10 @@ export const injectIntoShell = (html: string, title: string, tags: string): stri
     .replace(/<title>[\s\S]*?<\/title>/, () => `<title data-edge="1">${escapeHtml(title)}</title>`)
     .replace('</head>', () => `    ${tags}\n</head>`);
 
+// "/stiri/" and "/stiri//": the archive page, which the router also serves
+// for a trailing slash. Not an article, and not an error.
+export const isArchivePath = (pathname: string): boolean => /^\/stiri\/+$/.test(pathname);
+
 // "/stiri/some-slug" -> "some-slug"; null when the path is not a single segment
 export const slugFromPath = (pathname: string): string | null => {
   const m = /^\/stiri\/([^/]+)\/?$/.exec(pathname);
