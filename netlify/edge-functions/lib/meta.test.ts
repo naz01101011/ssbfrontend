@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import handler, { config } from '../article-meta.ts';
 import {
-  articleTags, describe, escapeHtml, imageUrl, injectIntoShell, slugFromPath, sanityUrl,
+  articleTags, describe, escapeHtml, imageUrl, injectIntoShell, isArchivePath, slugFromPath, sanityUrl,
 } from './meta.ts';
 
 const SHELL = '<!doctype html><html><head><title>Stiri de Sibiu</title></head><body><div id="root"></div></body></html>';
@@ -34,6 +34,14 @@ test('slugFromPath', () => {
   assert.equal(slugFromPath('/stiri/a/b'), null);
   assert.equal(slugFromPath('/stiri/'), null);
   assert.equal(slugFromPath('/stiri/%E0%A4%A'), null);
+});
+
+test('isArchivePath: only the archive with trailing slashes', () => {
+  assert.equal(isArchivePath('/stiri/'), true);
+  assert.equal(isArchivePath('/stiri//'), true);
+  assert.equal(isArchivePath('/stiri'), false);
+  assert.equal(isArchivePath('/stiri/a'), false);
+  assert.equal(isArchivePath('/stiri/a/'), false);
 });
 
 test('escapeHtml', () => assert.equal(escapeHtml('a"<b>&'), 'a&quot;&lt;b&gt;&amp;'));
@@ -102,6 +110,19 @@ test('handler: unknown slug -> real 404 with noindex, short cache', async () => 
     assert.equal(res.status, 404);
     assert.ok((await res.text()).includes('noindex'));
     assert.match(res.headers.get('netlify-cdn-cache-control')!, /s-maxage=300/);
+  });
+});
+
+test('handler: /stiri/ is the archive: plain shell with status 200, no Sanity call', async () => {
+  let fetched = 0;
+  const c = ctx();
+  await withFetch((async () => { fetched++; return new Response('{}'); }) as typeof fetch, async () => {
+    const res = await handler(req('/stiri/?x=1'), c);
+    assert.equal(res.status, 200);
+    assert.equal(await res.text(), SHELL);
+    assert.equal(res.headers.get('netlify-cdn-cache-control'), null);
+    assert.equal(fetched, 0);
+    assert.equal(c.calls(), 1);
   });
 });
 

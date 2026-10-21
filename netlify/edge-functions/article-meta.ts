@@ -14,6 +14,7 @@ import type { SanityPost } from './lib/meta.ts';
 import {
   articleTags,
   injectIntoShell,
+  isArchivePath,
   notFoundTags,
   sanityUrl,
   slugFromPath,
@@ -51,11 +52,18 @@ export default async (request: Request, context: Context): Promise<Response> => 
   const plainShell = () => new Response(html, { status: shell.status, headers: shell.headers });
 
   try {
-    const slug = slugFromPath(new URL(request.url).pathname);
+    const pathname = new URL(request.url).pathname;
+
+    if (isArchivePath(pathname)) {
+      console.log(`article-meta archive passthrough ${Date.now() - started}ms`);
+      return plainShell();
+    }
+
+    const slug = slugFromPath(pathname);
 
     if (slug === null) {
       const { title, tags } = notFoundTags();
-      console.log(`article-meta 404 bad-path ${Date.now() - started}ms`);
+      console.log(`article-meta 404 bad-path ${Date.now() - started}ms ${pathname.slice(0, 120)}`);
       return respond(injectIntoShell(html, title, tags), 404, NOT_FOUND_TTL);
     }
 
