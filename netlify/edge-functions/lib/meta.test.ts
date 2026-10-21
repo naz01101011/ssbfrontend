@@ -88,6 +88,7 @@ test('handler: article -> 200, injected tags, edge cache headers', async () => {
     assert.ok(html.includes('og:image'));
     assert.match(res.headers.get('netlify-cdn-cache-control')!, /s-maxage=21600/);
     assert.equal(res.headers.get('cache-control'), 'public, max-age=0, must-revalidate');
+    assert.equal(res.headers.get('netlify-vary'), 'query=_unused');
     assert.equal(c.calls(), 1);
   });
 });

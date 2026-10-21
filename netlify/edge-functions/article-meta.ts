@@ -31,6 +31,10 @@ const respond = (html: string, status: number, ttl: number): Response =>
       // browsers always revalidate; only the edge keeps a copy
       'cache-control': 'public, max-age=0, must-revalidate',
       'netlify-cdn-cache-control': `public, s-maxage=${ttl}`,
+      // Query strings are part of the cache key by default, and Facebook adds a
+      // unique ?fbclid= to every shared link. This page does not depend on any
+      // query parameter, so vary only on one that never occurs.
+      'netlify-vary': 'query=_unused',
     },
   });
 
