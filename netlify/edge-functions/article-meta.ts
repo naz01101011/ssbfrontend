@@ -8,6 +8,8 @@
 //  - the path is limited to /stiri/*
 //  - responses are cached at the edge; cached responses are not invocations
 //  - any error falls back to the plain shell, never to an error page
+//  - every invocation logs one line (Netlify > Cloud compute > Edge Function
+//    logs), so invocations can be counted without the billing page
 import type { SanityPost } from './lib/meta.ts';
 import {
   articleTags,
@@ -39,8 +41,12 @@ const respond = (html: string, status: number, ttl: number): Response =>
   });
 
 export default async (request: Request, context: Context): Promise<Response> => {
+  const started = Date.now();
   const shell = await context.next();
-  if (!shell.ok || !(shell.headers.get('content-type') ?? '').includes('text/html')) return shell;
+  if (!shell.ok || !(shell.headers.get('content-type') ?? '').includes('text/html')) {
+    console.log(`article-meta passthrough ${shell.status} ${Date.now() - started}ms`);
+    return shell;
+  }
   const html = await shell.text();
   const plainShell = () => new Response(html, { status: shell.status, headers: shell.headers });
 
@@ -49,6 +55,7 @@ export default async (request: Request, context: Context): Promise<Response> => 
 
     if (slug === null) {
       const { title, tags } = notFoundTags();
+      console.log(`article-meta 404 bad-path ${Date.now() - started}ms`);
       return respond(injectIntoShell(html, title, tags), 404, NOT_FOUND_TTL);
     }
 
@@ -58,13 +65,15 @@ export default async (request: Request, context: Context): Promise<Response> => 
 
     if (!post || !post.title) {
       const { title, tags } = notFoundTags();
+      console.log(`article-meta 404 ${Date.now() - started}ms ${slug}`);
       return respond(injectIntoShell(html, title, tags), 404, NOT_FOUND_TTL);
     }
 
     const { title, tags } = articleTags(slug, post);
+    console.log(`article-meta 200 ${Date.now() - started}ms ${slug}`);
     return respond(injectIntoShell(html, title, tags), 200, FOUND_TTL);
   } catch (err) {
-    console.error('article-meta failed, serving the plain shell:', err);
+    console.error(`article-meta fallback ${Date.now() - started}ms:`, err);
     return plainShell();
   }
 };
