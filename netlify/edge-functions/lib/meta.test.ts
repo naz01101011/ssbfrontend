@@ -8,6 +8,9 @@ import {
 const SHELL = '<!doctype html><html><head><title>Stiri de Sibiu</title></head><body><div id="root"></div></body></html>';
 const REF = 'image-213fdeee9ba23486f4fe38894758e3b7f1c594a3-1800x1584-jpg';
 
+// keep the per-invocation log lines out of the test output
+console.log = () => {};
+
 const ctx = () => {
   let calls = 0;
   return { calls: () => calls, next: async () => { calls++; return new Response(SHELL, { headers: { 'content-type': 'text/html' } }); } };
