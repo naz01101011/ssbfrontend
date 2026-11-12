@@ -17,15 +17,20 @@ import { hasTrackingConsent, loadTracking } from "./consent";
 import { removeEdgeMeta } from "./edgeMeta";
 import { Link, useLocation } from "react-router-dom";
 
-// Drops the edge-injected tags of the page we first loaded as soon as the
-// visitor navigates anywhere within the app.
+// The edge function puts a page's own tags into the HTML so crawlers see them.
+// Once the app has rendered its own, those must go, otherwise the page would
+// carry every tag twice. Articles clear them themselves when their data has
+// loaded (see Article.js); every other page's tags are in place from the first
+// render. Navigating anywhere within the app always clears them.
+const ARTICLE_PATH = /^\/stiri\/[^/]+/;
+
 const EdgeMetaCleanup = () => {
   const { pathname } = useLocation();
   const first = useRef(true);
   useEffect(() => {
     if (first.current) {
       first.current = false;
-      return;
+      if (ARTICLE_PATH.test(pathname)) return;
     }
     removeEdgeMeta();
   }, [pathname]);
