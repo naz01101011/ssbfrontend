@@ -1,7 +1,8 @@
 // Serves the SPA shell with real metadata, so crawlers and link-preview
 // scrapers (Facebook etc.) see it without running JavaScript:
 //  - /stiri/<slug>: the article's title, description, canonical, Open Graph
-//    tags; a real 404 for unknown slugs
+//    tags, NewsArticle structured data and the article text itself; a real
+//    404 for unknown slugs
 //  - /, /stiri, /contact, /cookies, /confidentialitate: their title,
 //    description, canonical and Open Graph tags; the home page also gets the
 //    latest headlines as links, and organization structured data
@@ -16,6 +17,7 @@
 //    logs), so invocations can be counted without the billing page
 import type { SanityPost } from './lib/meta.ts';
 import {
+  articleRootMarkup,
   articleTags,
   headlineMarkup,
   injectIntoRoot,
@@ -119,8 +121,9 @@ export default async (request: Request, context: Context): Promise<Response> => 
     }
 
     const { title, tags } = articleTags(slug, post);
+    const withBody = injectIntoRoot(injectIntoShell(html, title, tags), articleRootMarkup(post));
     console.log(`page-meta 200 ${ms()} ${slug}`);
-    return respond(injectIntoShell(html, title, tags), 200, ARTICLE_TTL);
+    return respond(withBody, 200, ARTICLE_TTL);
   } catch (err) {
     console.error(`page-meta fallback ${ms()}:`, err);
     return plainShell();

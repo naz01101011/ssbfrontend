@@ -8,8 +8,12 @@ export const SANITY_DATASET = 'production';
 export type SanityPost = {
   title?: string;
   publishedAt?: string;
+  _updatedAt?: string;
   excerpt?: Block[];
   firstBlock?: Block;
+  body?: PortableBlock[];
+  section?: string | null;
+  authors?: (string | null)[] | null;
   img?: {
     asset?: { _ref?: string };
     hotspot?: { x: number; y: number };
@@ -38,18 +42,23 @@ export const describe = (post: SanityPost, max = 200): string => {
   return text.slice(0, max).replace(/\s+\S*$/, '') + '…';
 };
 
+type ImageSource = { asset?: { _ref?: string }; hotspot?: { x: number; y: number } } | undefined;
+
 // "image-<id>-<width>x<height>-<ext>" -> CDN URL, with the editor's focal point
-export const imageUrl = (img: SanityPost['img'], w = 1200, h = 630): string => {
+export const imageUrlWith = (img: ImageSource, size: Record<string, string>): string => {
   const m = /^image-([a-f0-9]+)-(\d+x\d+)-([a-z0-9]+)$/i.exec(img?.asset?._ref ?? '');
   if (!m) return '';
-  const params = new URLSearchParams({ w: String(w), h: String(h), fit: 'crop', q: '60', auto: 'format' });
-  if (img?.hotspot) {
+  const params = new URLSearchParams({ ...size, q: '60', auto: 'format' });
+  if (img?.hotspot && size.h) {
     params.set('crop', 'focalpoint');
     params.set('fp-x', String(img.hotspot.x));
     params.set('fp-y', String(img.hotspot.y));
   }
   return `https://cdn.sanity.io/images/${SANITY_PROJECT}/${SANITY_DATASET}/${m[1]}-${m[2]}.${m[3]}?${params}`;
 };
+
+export const imageUrl = (img: ImageSource, w = 1200, h = 630): string =>
+  imageUrlWith(img, { w: String(w), h: String(h), fit: 'crop' });
 
 export const articleUrl = (slug: string): string => `${SITE}/stiri/${encodeURIComponent(slug)}`;
 
@@ -74,10 +83,13 @@ export const articleTags = (slug: string, post: SanityPost): { title: string; ta
     image && `<meta property="og:image:width" content="1200" />`,
     image && `<meta property="og:image:height" content="630" />`,
     post.publishedAt && `<meta property="article:published_time" content="${escapeHtml(post.publishedAt)}" />`,
+    post._updatedAt && `<meta property="article:modified_time" content="${escapeHtml(post._updatedAt)}" />`,
+    post.section && `<meta property="article:section" content="${escapeHtml(post.section)}" />`,
     `<meta name="twitter:card" content="${image ? 'summary_large_image' : 'summary'}" />`,
   ]
     .filter(Boolean)
     .map((x) => tag(x as string));
+  t.push(articleJsonLd(slug, post));
   return { title, tags: t.join('\n    ') };
 };
 
@@ -108,7 +120,7 @@ export const slugFromPath = (pathname: string): string | null => {
 };
 
 export const POST_QUERY =
-  '*[slug.current == $slug][0]{ title, publishedAt, excerpt, "firstBlock": body[0], "img": mainImage{ asset, hotspot } }';
+  '*[slug.current == $slug][0]{ title, publishedAt, _updatedAt, excerpt, body, "firstBlock": body[0], "img": mainImage{ asset, hotspot }, "section": categories[0]->title, "authors": authors[].author->name }';
 
 export const sanityUrl = (slug: string): string => {
   const u = new URL(`https://${SANITY_PROJECT}.apicdn.sanity.io/v2024-01-01/data/query/${SANITY_DATASET}`);
@@ -154,8 +166,11 @@ export const STATIC_PAGES: Record<string, StaticPage> = {
 export const HOME_HEADING = 'Știri de Sibiu – cele mai noi știri din județul Sibiu';
 
 // JSON-LD is embedded in a <script>: keep "<" out of it
+// data-edge-ld: unlike data-edge tags, these stay when the app takes over (a
+// crawler that renders the page should still see them) and are only removed
+// when the visitor navigates to another page within the app.
 const jsonLd = (data: unknown): string =>
-  `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+  `<script type="application/ld+json" data-edge-ld="1">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
 
 const HOME_JSON_LD = {
   '@context': 'https://schema.org',
@@ -224,3 +239,151 @@ export const latestUrl = (): string => {
   u.searchParams.set('query', LATEST_QUERY);
   return u.toString();
 };
+
+// ---- Article body and structured data -------------------------------------
+
+export type PortableSpan = { _type?: string; text?: string; marks?: string[] };
+export type PortableBlock = {
+  _type?: string;
+  style?: string;
+  listItem?: string;
+  level?: number;
+  children?: PortableSpan[];
+  markDefs?: { _key?: string; _type?: string; href?: string }[];
+  // mainImage
+  asset?: { _ref?: string };
+  hotspot?: { x: number; y: number };
+  alt?: string;
+  caption?: string;
+  // youtube / fbvideo
+  url?: string;
+};
+
+const MAX_BODY_HTML = 200_000; // characters; protects the response size
+
+// Only these may appear in an href; everything else is dropped (no javascript:)
+const safeHref = (href?: string): string | null =>
+  href && /^(https?:\/\/|mailto:|tel:|\/(?!\/))/i.test(href.trim()) ? href.trim() : null;
+
+const renderSpans = (block: PortableBlock): string => {
+  const links = new Map((block.markDefs ?? []).filter((d) => d._type === 'link').map((d) => [d._key, d.href]));
+  return (block.children ?? [])
+    .map((span) => {
+      let html = escapeHtml(span.text ?? '').replace(/\n/g, '<br />');
+      for (const mark of span.marks ?? []) {
+        if (mark === 'strong') html = `<strong>${html}</strong>`;
+        else if (mark === 'em') html = `<em>${html}</em>`;
+        else if (links.has(mark)) {
+          const href = safeHref(links.get(mark));
+          if (href) html = `<a href="${escapeHtml(href)}">${html}</a>`;
+        }
+      }
+      return html;
+    })
+    .join('');
+};
+
+const plainText = (block: PortableBlock): string =>
+  (block.children ?? []).map((c) => c.text ?? '').join('').trim();
+
+const HEADINGS: Record<string, string> = { h1: 'h2', h2: 'h2', h3: 'h3', h4: 'h4', h5: 'h4', h6: 'h4' };
+
+// A small Portable Text -> HTML renderer for the block types this site uses:
+// paragraphs, headings, bullet/numbered lists (two levels), bold/italic/links,
+// images, and video links. Anything else is skipped.
+export const portableTextToHtml = (blocks: PortableBlock[] | null | undefined): string => {
+  const out: string[] = [];
+  const open: { tag: 'ul' | 'ol'; level: number }[] = []; // stack of open lists
+  const closeLists = (downTo: number) => {
+    while (open.length > downTo) out.push(`</li></${open.pop()!.tag}>`);
+  };
+
+  for (const block of blocks ?? []) {
+    if (out.join('').length > MAX_BODY_HTML) break;
+
+    if (block._type === 'block' && block.listItem) {
+      if (!plainText(block)) continue;
+      const tag = block.listItem === 'number' ? 'ol' : 'ul';
+      const level = block.level && block.level > 0 ? block.level : 1;
+      // leave deeper lists, then close a sibling of a different kind
+      while (open.length && open[open.length - 1].level > level) out.push(`</li></${open.pop()!.tag}>`);
+      const top = open[open.length - 1];
+      if (top && top.level === level && top.tag === tag) out.push('</li>');
+      else if (top && top.level === level) {
+        out.push(`</li></${open.pop()!.tag}>`);
+        out.push(`<${tag}>`);
+        open.push({ tag, level });
+      } else {
+        out.push(`<${tag}>`);
+        open.push({ tag, level });
+      }
+      out.push(`<li>${renderSpans(block)}`);
+      continue;
+    }
+
+    closeLists(0);
+
+    if (block._type === 'block') {
+      if (!plainText(block)) continue;
+      const style = block.style ?? 'normal';
+      if (style === 'blockquote') out.push(`<blockquote><p>${renderSpans(block)}</p></blockquote>`);
+      else if (HEADINGS[style]) out.push(`<${HEADINGS[style]}>${renderSpans(block)}</${HEADINGS[style]}>`);
+      else out.push(`<p>${renderSpans(block)}</p>`);
+    } else if (block._type === 'mainImage') {
+      const src = imageUrlWith({ asset: block.asset }, { w: '900' });
+      if (!src) continue;
+      out.push(
+        `<figure><img src="${escapeHtml(src)}" alt="${escapeHtml((block.alt ?? '').trim())}" loading="lazy" />` +
+          (block.caption?.trim() ? `<figcaption>${escapeHtml(block.caption.trim())}</figcaption>` : '') +
+          `</figure>`
+      );
+    } else if (block._type === 'youtube' || block._type === 'fbvideo' || block._type === 'facebookVideo') {
+      const href = safeHref(block.url);
+      if (href && /^https?:/i.test(href)) out.push(`<p><a href="${escapeHtml(href)}">Video: ${escapeHtml(href)}</a></p>`);
+    }
+  }
+  closeLists(0);
+  return out.join('');
+};
+
+const articleSizes = [
+  { w: '1200', h: '675' }, // 16:9
+  { w: '1200', h: '900' }, // 4:3
+  { w: '1200', h: '1200' }, // 1:1
+];
+
+export const articleJsonLd = (slug: string, post: SanityPost): string => {
+  const description = describe(post);
+  const authors = (post.authors ?? []).filter((a): a is string => !!a?.trim());
+  const images = articleSizes
+    .map((s) => imageUrlWith(post.img, { ...s, fit: 'crop' }))
+    .filter(Boolean);
+  return jsonLd({
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl(slug) },
+    headline: (post.title ?? '').trim().slice(0, 110),
+    ...(description && { description }),
+    ...(images.length && { image: images }),
+    ...(post.publishedAt && { datePublished: post.publishedAt }),
+    dateModified: post._updatedAt ?? post.publishedAt,
+    // most posts have no author recorded, so the publisher is the author then
+    author: authors.length
+      ? authors.map((name) => ({ '@type': 'Person', name: name.trim() }))
+      : { '@type': 'Organization', name: 'Știri de Sibiu', url: `${SITE}/` },
+    publisher: {
+      '@type': 'NewsMediaOrganization',
+      name: 'Știri de Sibiu',
+      url: `${SITE}/`,
+      logo: { '@type': 'ImageObject', url: `${SITE}/logo512.png`, width: 512, height: 512 },
+    },
+    inLanguage: 'ro',
+    isAccessibleForFree: true,
+    ...(post.section && { articleSection: post.section }),
+  });
+};
+
+// Real text for crawlers, inside #root. Visually hidden so visitors never see
+// it unstyled before the app renders; React replaces #root's content.
+export const articleRootMarkup = (post: SanityPost): string =>
+  `<article class="sr-only"><h1>${escapeHtml((post.title ?? '').trim())}</h1>${portableTextToHtml(post.body)}</article>`;
