@@ -116,3 +116,111 @@ export const sanityUrl = (slug: string): string => {
   u.searchParams.set('$slug', JSON.stringify(slug));
   return u.toString();
 };
+
+// ---- Pages other than articles -------------------------------------------
+
+export type StaticPage = { title: string; description: string; canonical: string };
+
+// Must match the <Helmet> in the matching src/pages/*.js; meta.test.ts checks.
+export const STATIC_PAGES: Record<string, StaticPage> = {
+  '/': {
+    title: 'Stiri de Sibiu',
+    description:
+      'Pagina principala Stiri de Sibiu. Cele mai importante stiri din judetul Sibiu, oferite respectand etica si deontologia jurnalistica.',
+    canonical: 'https://www.stiridesibiu.ro',
+  },
+  '/stiri': {
+    title: 'Arhiva Stiri de Sibiu',
+    description: 'Cauta articolele publicate de Stiri de Sibiu',
+    canonical: 'https://www.stiridesibiu.ro/stiri',
+  },
+  '/contact': {
+    title: 'Contact Stiri de Sibiu',
+    description: 'Contacteaza-ne in legatura cu orice nelamurire, sugestie sau intrebare.',
+    canonical: 'https://www.stiridesibiu.ro/contact',
+  },
+  '/cookies': {
+    title: 'Politica de Cookies',
+    description: 'Politica de cookies a site-ului Stiri de Sibiu',
+    canonical: 'https://www.stiridesibiu.ro/cookies',
+  },
+  '/confidentialitate': {
+    title: 'Politica de Confidentialitate',
+    description: 'Politica de confidentialitate a site-ului Stiri de Sibiu',
+    canonical: 'https://www.stiridesibiu.ro/confidentialitate',
+  },
+};
+
+export const HOME_HEADING = 'Știri de Sibiu – cele mai noi știri din județul Sibiu';
+
+// JSON-LD is embedded in a <script>: keep "<" out of it
+const jsonLd = (data: unknown): string =>
+  `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+
+const HOME_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'NewsMediaOrganization',
+      '@id': `${SITE}/#organization`,
+      name: 'Știri de Sibiu',
+      legalName: 'CONSAF NEW SRL',
+      url: `${SITE}/`,
+      logo: { '@type': 'ImageObject', url: `${SITE}/logo512.png`, width: 512, height: 512 },
+      email: 'redactie@stiridesibiu.ro',
+      telephone: '+40746773513',
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE}/#website`,
+      name: 'Știri de Sibiu',
+      url: `${SITE}/`,
+      inLanguage: 'ro',
+      publisher: { '@id': `${SITE}/#organization` },
+    },
+  ],
+};
+
+export const staticTags = (path: string): { title: string; tags: string } | null => {
+  const page = STATIC_PAGES[path];
+  if (!page) return null;
+  const t = [
+    `<meta name="description" content="${escapeHtml(page.description)}" />`,
+    `<link rel="canonical" href="${escapeHtml(page.canonical)}" />`,
+    `<meta property="og:type" content="website" />`,
+    `<meta property="og:url" content="${escapeHtml(page.canonical)}" />`,
+    `<meta property="og:title" content="${escapeHtml(page.title)}" />`,
+    `<meta property="og:description" content="${escapeHtml(page.description)}" />`,
+    `<meta property="og:image" content="${SITE}/logo512.png" />`,
+    `<meta property="og:image:width" content="512" />`,
+    `<meta property="og:image:height" content="512" />`,
+    `<meta name="twitter:card" content="summary" />`,
+  ].map(tag);
+  // site-wide, so it is not removed when the visitor navigates (no data-edge)
+  if (path === '/') t.push(jsonLd(HOME_JSON_LD));
+  return { title: page.title, tags: t.join('\n    ') };
+};
+
+export type Headline = { title?: string; slug?: string };
+
+// Real links for crawlers, inside #root. Visually hidden so visitors never see
+// an unstyled list before the app renders; React replaces #root's content.
+export const headlineMarkup = (posts: Headline[]): string => {
+  const items = posts
+    .filter((p) => p.title?.trim() && p.slug)
+    .map((p) => `<li><a href="/stiri/${encodeURIComponent(p.slug!)}">${escapeHtml(p.title!.trim())}</a></li>`)
+    .join('');
+  return `<div class="sr-only"><h1>${escapeHtml(HOME_HEADING)}</h1><h2>Ultimele știri</h2><ul>${items}</ul></div>`;
+};
+
+export const injectIntoRoot = (html: string, markup: string): string =>
+  html.replace('<div id="root"></div>', () => `<div id="root">${markup}</div>`);
+
+export const LATEST_QUERY =
+  '*[_type == "post" && defined(publishedAt)] | order(publishedAt desc) [0...20] { title, "slug": slug.current }';
+
+export const latestUrl = (): string => {
+  const u = new URL(`https://${SANITY_PROJECT}.apicdn.sanity.io/v2024-01-01/data/query/${SANITY_DATASET}`);
+  u.searchParams.set('query', LATEST_QUERY);
+  return u.toString();
+};
