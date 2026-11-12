@@ -71,6 +71,8 @@ export const articleTags = (slug: string, post: SanityPost): { title: string; ta
     `<meta property="og:title" content="${escapeHtml(title)}" />`,
     description && `<meta property="og:description" content="${escapeHtml(description)}" />`,
     image && `<meta property="og:image" content="${escapeHtml(image)}" />`,
+    image && `<meta property="og:image:width" content="1200" />`,
+    image && `<meta property="og:image:height" content="630" />`,
     post.publishedAt && `<meta property="article:published_time" content="${escapeHtml(post.publishedAt)}" />`,
     `<meta name="twitter:card" content="${image ? 'summary_large_image' : 'summary'}" />`,
   ]

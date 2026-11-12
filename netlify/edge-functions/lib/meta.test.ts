@@ -71,6 +71,7 @@ test('articleTags: all tags marked data-edge, values escaped', () => {
   assert.ok(tags.includes('content="Rezumat &amp; co"'));
   assert.ok(tags.includes('href="https://www.stiridesibiu.ro/stiri/a-b"'));
   assert.ok(tags.includes('summary_large_image'));
+  assert.ok(tags.includes('og:image:width" content="1200"') && tags.includes('og:image:height" content="630"'));
   const lines = tags.split('\n').map((l) => l.trim());
   assert.ok(lines.every((l) => l.startsWith('<') && l.includes('data-edge="1"')), tags);
 });

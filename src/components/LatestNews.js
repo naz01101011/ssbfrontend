@@ -23,7 +23,7 @@ const LatestNews = (props) => {
                         <Link className='link' to={'/stiri/' + mainPost.slug}>
                             <div>
                                 <div className="featImg">
-                                    <img className='responsive-img' src={urlFor(mainPost.mainImage).width(900).height(470).fit('crop').crop('focalpoint').quality(30).url()} alt={mainPost.mainImage.alt} />
+                                    <img className='responsive-img' width={900} height={470} fetchPriority='high' src={urlFor(mainPost.mainImage).width(900).height(470).fit('crop').crop('focalpoint').quality(30).url()} alt={mainPost.mainImage.alt || mainPost.title} />
                                 </div>
                                 <div>
                                     <span className='info grey lighten-3 deep-orange-text text-darken-1'>{SerializeDate(mainPost.publishedAt)} <span className='grey'>{mainPost.authorName}</span></span>

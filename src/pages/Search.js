@@ -3,6 +3,7 @@ import SideBar from '../components/SideBar';
 import Client from '../components/Client';
 import NewsList from '../components/NewsList';
 import {Link} from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const Search = (props) => {
     const term = props.location.state?.term || ''
@@ -37,10 +38,14 @@ const Search = (props) => {
 
     return (
         <main className='container'>
+            <Helmet>
+                <title>Căutare - Stiri de Sibiu</title>
+                <meta name="robots" content="noindex" />
+            </Helmet>
             <div>
               <span><Link to='/'>Știri de Sibiu</Link> > Știri</span>
                 <div>
-                    <h3>Rezultate</h3>
+                    <h1 className='title-h3'>Rezultate</h1>
                     <h6>Ai căutat termenul: "{term}"</h6>
                 </div>
                 <div className='row section'>

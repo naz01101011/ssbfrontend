@@ -62,7 +62,7 @@ const NewsListItem = (props) => {
                     <Link className='link' to={'/stiri/' + props.slug}>
                         <div className='section row '>
                             <div className='col s12 4'>
-                                <img className='responsive-img' src={urlFor(props.image).width(400).height(300).fit('crop').crop('focalpoint').quality(30).url()} alt='' />
+                                <img className='responsive-img' width={400} height={300} loading='lazy' src={urlFor(props.image).width(400).height(300).fit('crop').crop('focalpoint').quality(30).url()} alt='' />
                             </div>
                             <div className='col s12 m8'>
                                     <span className='info grey lighten-4  deep-orange-text text-darken-1'>{SerializeDate(props.date)} <span className='grey'>{props.author}</span></span>
@@ -83,7 +83,7 @@ const NewsListItem = (props) => {
                     <Link className='link' to={'/stiri/' + props.slug}>
                         <div className='section row'>
                             <div className='col s12 m4'>
-                                <img className='responsive-img' src={urlFor(props.image).width(400).height(400).fit('crop').crop('focalpoint').quality(30).url()} alt='' />
+                                <img className='responsive-img' width={400} height={400} loading='lazy' src={urlFor(props.image).width(400).height(400).fit('crop').crop('focalpoint').quality(30).url()} alt='' />
                             </div>
                             <div className='col s12 m8'>
                                     <span className='info grey lighten-4  deep-orange-text text-darken-1'>{SerializeDate(props.date)} <span className='grey'>{props.author}</span></span>

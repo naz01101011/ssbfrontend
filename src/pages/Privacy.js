@@ -69,7 +69,7 @@ const Privacy = (props) => {
                 {loaded ? (
                     <div>  
                       <span><Link to='/'>Știri de Sibiu</Link> > Confidentialitate</span>
-                        <h3>{title}</h3>
+                        <h1 className='title-h3'>{title}</h1>
                         
                         <div className='row section'>
                             <div className='col s12'>
