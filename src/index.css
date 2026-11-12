@@ -180,3 +180,27 @@ textarea:focus {
   display: flex;
   justify-content: center;
 }
+
+/* Page titles are <h1>; these keep the size they had as <h3>/<h4> */
+.title-h3 {
+  font-size: 2.92rem;
+  line-height: 110%;
+  margin: 1.9466666667rem 0 1.168rem 0;
+}
+.title-h4 {
+  font-size: 2.28rem;
+  line-height: 110%;
+  margin: 1.52rem 0 .912rem 0;
+}
+/* Available to screen readers and crawlers, not shown */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
