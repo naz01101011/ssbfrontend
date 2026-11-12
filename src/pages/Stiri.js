@@ -53,10 +53,10 @@ const Stiri = () => {
         <div>
           <div className="row section">
             <div className="col s12 m8">
-              <h4>
+              <h1 className="title-h4">
                 Știri publicate în data de {('0' + value.getDate()).slice(-2)}.
                 {('0' + (value.getMonth()+1)).slice(-2)}.{value.getFullYear()}
-              </h4>
+              </h1>
               <NewsList list={archive} images="false" />
             </div>
             <div className="col s12 m4">

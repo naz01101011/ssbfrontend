@@ -25,7 +25,7 @@ const Highlight = (props) => {
                             </div>}
                         </div>
                         <div className="col s12 m12 l4">
-                            <img className='responsive-img' src={urlFor(highlightPost.mainImage).width(400).height(300).fit('crop').crop('focalpoint').quality(30).url()} alt={highlightPost.mainImage.alt} />
+                            <img className='responsive-img' width={400} height={300} loading='lazy' src={urlFor(highlightPost.mainImage).width(400).height(300).fit('crop').crop('focalpoint').quality(30).url()} alt={highlightPost.mainImage.alt || highlightPost.title} />
                         </div>
                     </div>
                 </Link>

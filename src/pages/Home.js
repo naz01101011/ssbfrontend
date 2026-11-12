@@ -69,6 +69,7 @@ const Home = () => {
                     <meta name="keywords" content="stiri sibiu jurnalism romania" />
                     <link rel="canonical" href="https://www.stiridesibiu.ro" />
             </Helmet>
+            <h1 className='sr-only'>Știri de Sibiu – cele mai noi știri din județul Sibiu</h1>
             {loaded ? (
                 <div>
                     <LatestNews data={latestNewsData} pinned={pinnedPost}/>

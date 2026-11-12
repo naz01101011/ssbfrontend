@@ -62,7 +62,7 @@ const Article = (props) => {
         types: {
             mainImage: props => (
                 <div style={{ maxWidth: 'max-content', marginLeft: 'auto', marginRight: 'auto' }}>
-                    <img className='responsive-img' src={urlFor(props.node).height(450).fit('crop').crop('focalpoint').quality(60).url()} alt={props.node.alt} key={Math.random()} />
+                    <img className='responsive-img' loading='lazy' src={urlFor(props.node).height(450).fit('crop').crop('focalpoint').quality(60).url()} alt={props.node.alt} key={Math.random()} />
                     <span className='info grey lighten-4 text-darken-1' style={{ display: 'block' }}>{props.node.caption}</span>
                 </div>
             ),
@@ -102,7 +102,7 @@ const Article = (props) => {
                     <title>Articol negăsit</title>
                     <meta name="robots" content="noindex" />
                 </Helmet>
-                <h3>Articolul nu a fost găsit</h3>
+                <h1 className='title-h3'>Articolul nu a fost găsit</h1>
                 <p><Link to='/'>Înapoi la prima pagină</Link></p>
             </main>
         )
@@ -131,6 +131,8 @@ const Article = (props) => {
                         <meta property="og:title" content={title} />
                         <meta property="og:image" content={img ? urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url() : ''} />
                         <meta property="og:description" content={excerpt} />
+                        {img && <meta property="og:image:width" content="900" />}
+                        {img && <meta property="og:image:height" content="450" />}
                         <meta name="twitter:card" content={img ? 'summary_large_image' : 'summary'} />
                     </Helmet>
                 )}
@@ -138,12 +140,12 @@ const Article = (props) => {
                 {loaded ? (
                     <div>
                         <span><Link to='/'>Știri de Sibiu</Link> > Știri</span>
-                        <h3>{title}</h3>
+                        <h1 className='title-h3'>{title}</h1>
 
                         <div className='row section'>
                             <div className='col s12 m8'>
                                 {img ? (
-                                    <img className='responsive-img' width={900} height={540} src={urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url()} alt={img.alt} />
+                                    <img className='responsive-img' width={900} height={450} fetchPriority='high' src={urlFor(img).width(900).height(450).fit('crop').crop('focalpoint').quality(60).url()} alt={img.alt || title} />
                                 ) : (
                                     <span className='info grey lighten-4  grey-text text-darken-2'>Articol fără imagine</span>
                                 )}

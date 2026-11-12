@@ -16,7 +16,7 @@ const Contact = () => {
             </Helmet>
             <div className='section'>
                 <span><Link to='/'>Știri de Sibiu</Link> > Contact</span>
-                <h3>Contactează-ne aici</h3>
+                <h1 className='title-h3'>Contactează-ne aici</h1>
                 <div className='row'>
                     <div className='col s12 m8'>
                         <ContactForm />
