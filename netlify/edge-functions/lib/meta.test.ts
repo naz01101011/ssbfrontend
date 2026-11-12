@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import handler, { config } from '../page-meta.ts';
 import {
-  STATIC_PAGES, articleTags, describe, escapeHtml, headlineMarkup, imageUrl, injectIntoRoot, injectIntoShell, isArchivePath, slugFromPath, sanityUrl, staticTags,
+  STATIC_PAGES, articleJsonLd, articleRootMarkup, articleTags, describe, escapeHtml, headlineMarkup, imageUrl, injectIntoRoot, injectIntoShell, isArchivePath, portableTextToHtml, slugFromPath, sanityUrl, staticTags,
 } from './meta.ts';
 
 const SHELL = '<!doctype html><html><head><title>Stiri de Sibiu</title></head><body><div id="root"></div></body></html>';
@@ -45,7 +45,8 @@ test('staticTags: marked data-edge; home adds organization JSON-LD, others do no
   const home = staticTags('/')!;
   const lines = home.tags.split('\n').map((l) => l.trim());
   assert.ok(lines.filter((l) => !l.startsWith('<script')).every((l) => l.includes('data-edge="1"')));
-  const ld = /<script type="application\/ld\+json">(.*)<\/script>/.exec(home.tags);
+  assert.ok(lines.filter((l) => l.startsWith('<script')).every((l) => l.includes('data-edge-ld="1"')));
+  const ld = /<script type="application\/ld\+json"[^>]*>(.*)<\/script>/.exec(home.tags);
   assert.ok(ld);
   const data = JSON.parse(ld![1]);
   assert.deepEqual(data['@graph'].map((x: { '@type': string }) => x['@type']), ['NewsMediaOrganization', 'WebSite']);
@@ -60,6 +61,90 @@ test('headlineMarkup: escapes, encodes slugs, skips incomplete entries, has the 
   assert.ok(out.includes('<h1>'));
   assert.ok(out.includes('<li><a href="/stiri/a%20b">A &amp; &lt;b&gt;</a></li>'));
   assert.equal(out.match(/<li>/g)?.length, 1);
+});
+
+const span = (text: string, marks: string[] = []) => ({ _type: 'span', text, marks });
+const para = (...children: ReturnType<typeof span>[]) => ({ _type: 'block', style: 'normal', children, markDefs: [] as never[] });
+
+test('portableTextToHtml: paragraphs, escaping, line breaks, marks', () => {
+  const html = portableTextToHtml([
+    para(span('A <b> & "q"\nline2', ['strong', 'em'])),
+    para(span('')),
+    para(span('  \n ')),
+    { _type: 'block', style: 'normal', children: [span('link', ['k1']), span(' bad', ['k2'])],
+      markDefs: [{ _key: 'k1', _type: 'link', href: 'https://example.com/?a=1&b="2"' }, { _key: 'k2', _type: 'link', href: 'javascript:alert(1)' }] },
+  ]);
+  assert.equal(html.match(/<p>/g)?.length, 2, 'empty paragraphs are dropped');
+  assert.ok(html.includes('<em><strong>A &lt;b&gt; &amp; &quot;q&quot;<br />line2</strong></em>'));
+  assert.ok(html.includes('<a href="https://example.com/?a=1&amp;b=&quot;2&quot;">link</a>'));
+  assert.ok(!html.includes('javascript:'), 'unsafe link dropped, text kept');
+  assert.ok(html.includes(' bad'));
+});
+
+test('portableTextToHtml: headings keep one h1 on the page', () => {
+  const h = (style: string) => ({ ...para(span(style)), style });
+  const html = portableTextToHtml([h('h1'), h('h2'), h('h3'), h('h4'), h('blockquote'), h('weird')]);
+  assert.ok(!html.includes('<h1'));
+  assert.ok(html.includes('<h2>h1</h2><h2>h2</h2><h3>h3</h3><h4>h4</h4>'));
+  assert.ok(html.includes('<blockquote><p>blockquote</p></blockquote>'));
+  assert.ok(html.includes('<p>weird</p>'));
+});
+
+test('portableTextToHtml: bullet and numbered lists, two levels, grouped', () => {
+  const li = (text: string, listItem: string, level = 1) => ({ ...para(span(text)), listItem, level });
+  const html = portableTextToHtml([
+    li('a', 'bullet'), li('b', 'bullet'), li('b1', 'bullet', 2), li('c', 'bullet'),
+    para(span('between')),
+    li('one', 'number'), li('two', 'number'),
+  ]);
+  assert.equal(html, '<ul><li>a</li><li>b<ul><li>b1</li></ul></li><li>c</li></ul><p>between</p><ol><li>one</li><li>two</li></ol>');
+});
+
+test('portableTextToHtml: images, videos, unknown blocks, nothing', () => {
+  const html = portableTextToHtml([
+    { _type: 'mainImage', asset: { _ref: REF }, alt: 'Alt "x"', caption: ' Cap ' },
+    { _type: 'mainImage', asset: { _ref: 'bad' } },
+    { _type: 'youtube', url: 'https://youtu.be/abc' },
+    { _type: 'fbvideo', url: 'javascript:x' },
+    { _type: 'somethingNew', text: 'ignored' },
+  ] as never);
+  assert.ok(html.includes('<figure><img src="https://cdn.sanity.io/images/w58sh5v7/production/213fdeee9ba23486f4fe38894758e3b7f1c594a3-1800x1584.jpg?w=900'));
+  assert.ok(html.includes('alt="Alt &quot;x&quot;"') && html.includes('<figcaption>Cap</figcaption>'));
+  assert.equal(html.match(/<figure>/g)?.length, 1);
+  assert.ok(html.includes('<a href="https://youtu.be/abc">Video: https://youtu.be/abc</a>'));
+  assert.ok(!html.includes('javascript') && !html.includes('ignored'));
+  assert.equal(portableTextToHtml(null), '');
+  assert.equal(portableTextToHtml(undefined), '');
+});
+
+test('portableTextToHtml: output is capped', () => {
+  const html = portableTextToHtml(Array.from({ length: 5000 }, () => para(span('x'.repeat(200)))));
+  assert.ok(html.length < 260_000);
+});
+
+test('articleJsonLd: NewsArticle with images, dates, publisher; author falls back to the organisation', () => {
+  const ld = (post: object) => JSON.parse(/<script[^>]*>(.*)<\/script>/.exec(articleJsonLd('a-b', post))![1]);
+  const d = ld({ title: 'T'.repeat(200), publishedAt: '2026-10-20T15:01:55Z', _updatedAt: '2026-10-20T15:05:17Z', excerpt: [{ children: [{ text: 'Rezumat' }] }], img: { asset: { _ref: REF }, hotspot: { x: 0.5, y: 0.5 } }, section: 'Sport' });
+  assert.equal(d['@type'], 'NewsArticle');
+  assert.equal(d.headline.length, 110);
+  assert.equal(d.mainEntityOfPage['@id'], 'https://www.stiridesibiu.ro/stiri/a-b');
+  assert.equal(d.datePublished, '2026-10-20T15:01:55Z');
+  assert.equal(d.dateModified, '2026-10-20T15:05:17Z');
+  assert.equal(d.image.length, 3);
+  assert.ok(new URL(d.image[2]).searchParams.get('h') === '1200');
+  assert.equal(d.author['@type'], 'Organization');
+  assert.equal(d.publisher.logo.url, 'https://www.stiridesibiu.ro/logo512.png');
+  assert.equal(d.articleSection, 'Sport');
+  assert.equal(d.inLanguage, 'ro');
+  assert.deepEqual(ld({ title: 'x', authors: ['  Ana Pop ', null] }).author, [{ '@type': 'Person', name: 'Ana Pop' }]);
+  const bare = ld({ title: 'x' });
+  assert.ok(!('image' in bare) && !('articleSection' in bare) && !('description' in bare));
+  assert.ok(!articleJsonLd('a', { title: '</script><b>' }).slice(40, -9).includes('<'), 'no raw < inside the script');
+});
+
+test('articleRootMarkup: visually hidden article with the single h1 and the text', () => {
+  const html = articleRootMarkup({ title: ' Titlu & co ', body: [para(span('Text'))] as never });
+  assert.equal(html, '<article class="sr-only"><h1>Titlu &amp; co</h1><p>Text</p></article>');
 });
 
 test('injectIntoRoot', () => {
@@ -105,15 +190,17 @@ test('imageUrl: crop uses the focal point; bad refs give nothing', () => {
 });
 
 test('articleTags: all tags marked data-edge, values escaped', () => {
-  const { title, tags } = articleTags('a-b', { title: '  Un "titlu" <x> ', publishedAt: '2026-10-20T15:01:55Z', excerpt: [{ children: [{ text: 'Rezumat & co' }] }], img: { asset: { _ref: REF } } });
+  const { title, tags } = articleTags('a-b', { title: '  Un "titlu" <x> ', publishedAt: '2026-10-20T15:01:55Z', _updatedAt: '2026-10-20T15:05:17Z', excerpt: [{ children: [{ text: 'Rezumat & co' }] }], img: { asset: { _ref: REF } } });
   assert.equal(title, 'Un "titlu" <x>');
   assert.ok(tags.includes('og:title" content="Un &quot;titlu&quot; &lt;x&gt;"'));
   assert.ok(tags.includes('content="Rezumat &amp; co"'));
   assert.ok(tags.includes('href="https://www.stiridesibiu.ro/stiri/a-b"'));
   assert.ok(tags.includes('summary_large_image'));
   assert.ok(tags.includes('og:image:width" content="1200"') && tags.includes('og:image:height" content="630"'));
-  const lines = tags.split('\n').map((l) => l.trim());
+  const lines = tags.split('\n').map((l) => l.trim()).filter((l) => !l.startsWith('<script'));
   assert.ok(lines.every((l) => l.startsWith('<') && l.includes('data-edge="1"')), tags);
+  assert.ok(tags.includes('<script type="application/ld+json" data-edge-ld="1">'));
+  assert.ok(tags.includes('article:modified_time'));
 });
 
 test('injectIntoShell: one title, tags before </head>', () => {
@@ -132,12 +219,14 @@ test('sanityUrl passes the slug as a parameter', () => {
 
 test('handler: article -> 200, injected tags, edge cache headers', async () => {
   const c = ctx();
-  await withFetch(sanity({ title: 'Titlu', excerpt: [{ children: [{ text: 'Rezumat' }] }], img: { asset: { _ref: REF } } }), async () => {
+  await withFetch(sanity({ title: 'Titlu', excerpt: [{ children: [{ text: 'Rezumat' }] }], body: [{ _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'Corp', marks: [] }] }], img: { asset: { _ref: REF } } }), async () => {
     const res = await handler(req('/stiri/titlu'), c);
     const html = await res.text();
     assert.equal(res.status, 200);
     assert.ok(html.includes('<title data-edge="1">Titlu</title>'));
     assert.ok(html.includes('og:image'));
+    assert.ok(html.includes('<div id="root"><article class="sr-only"><h1>Titlu</h1><p>Corp</p></article></div>'));
+    assert.ok(html.includes('"@type":"NewsArticle"'));
     assert.match(res.headers.get('netlify-cdn-cache-control')!, /s-maxage=21600/);
     assert.equal(res.headers.get('cache-control'), 'public, max-age=0, must-revalidate');
     assert.equal(res.headers.get('netlify-vary'), 'query=_unused');

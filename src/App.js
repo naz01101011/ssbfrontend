@@ -14,7 +14,7 @@ import AppFooter from "./components/AppFooter";
 import CookieConsent from "react-cookie-consent";
 import ConsentContext from "./context/ConsentContext";
 import { hasTrackingConsent, loadTracking } from "./consent";
-import { removeEdgeMeta } from "./edgeMeta";
+import { removeEdgeMeta, removeEdgeStructuredData } from "./edgeMeta";
 import { Link, useLocation } from "react-router-dom";
 
 // The edge function puts a page's own tags into the HTML so crawlers see them.
@@ -30,9 +30,11 @@ const EdgeMetaCleanup = () => {
   useEffect(() => {
     if (first.current) {
       first.current = false;
-      if (ARTICLE_PATH.test(pathname)) return;
+      if (!ARTICLE_PATH.test(pathname)) removeEdgeMeta();
+      return;
     }
     removeEdgeMeta();
+    removeEdgeStructuredData();
   }, [pathname]);
   return null;
 };
