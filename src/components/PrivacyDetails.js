@@ -27,12 +27,19 @@ const PrivacyDetails = () => (
             Dacă apeși „Accept” în bannerul de cookie-uri, se activează:
         </p>
         <ul style={{ marginLeft: '1em' }}>
-            <li style={li}><b>Google Analytics</b> – statistici despre utilizarea site-ului;</li>
+            <li style={li}><b>Google Analytics</b> – cookie-uri și identificatori pentru statistici despre utilizarea site-ului;</li>
             <li style={li}><b>trafic.ro</b> – măsurarea audienței;</li>
             <li style={li}><b>Google AdSense</b> – afișarea de reclame.</li>
         </ul>
         <p>
-            Aceste servicii primesc date tehnice despre vizita ta, precum adresa IP,
+            Chiar și fără acord, Google Analytics rulează în modul fără cookie-uri:
+            primește doar date tehnice anonime (pagina vizitată, tipul
+            dispozitivului, adresa IP trunchiată de Google), fără a stoca
+            identificatori pe dispozitivul tău, iar Google poate folosi aceste
+            date pentru estimări statistice agregate.
+        </p>
+        <p>
+            Serviciile de mai sus primesc date tehnice despre vizita ta, precum adresa IP,
             identificatori ai browserului, paginile vizitate și informații despre
             dispozitiv, și își stabilesc propriile cookie-uri. Ele sunt furnizate de
             terți, care răspund de propria prelucrare și pot prelucra datele și în
