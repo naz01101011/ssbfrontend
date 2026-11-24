@@ -13,7 +13,7 @@ import Client from "./components/Client";
 import AppFooter from "./components/AppFooter";
 import CookieConsent from "react-cookie-consent";
 import ConsentContext from "./context/ConsentContext";
-import { hasTrackingConsent, loadTracking } from "./consent";
+import { hasTrackingConsent, initAnalytics, loadTracking } from "./consent";
 import { removeEdgeMeta, removeEdgeStructuredData } from "./edgeMeta";
 import { Link, useLocation } from "react-router-dom";
 
@@ -53,6 +53,10 @@ function App() {
 
   useEffect(() => {
     fetchAds();
+  }, []);
+
+  useEffect(() => {
+    initAnalytics();
   }, []);
 
   useEffect(() => {

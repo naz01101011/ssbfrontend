@@ -7,6 +7,7 @@ const TRAFIC_ID = "stiridesibiu-ro";
 const ADSENSE_CLIENT = "ca-pub-2723789094037700";
 
 let loaded = false;
+let analyticsLoaded = false;
 
 const addScript = (src, attrs = {}) => {
   const script = document.createElement("script");
@@ -16,20 +17,42 @@ const addScript = (src, attrs = {}) => {
   document.head.appendChild(script);
 };
 
-// Third-party analytics and advertising scripts. Call only after the visitor
+// Google Analytics runs for everyone in Consent Mode: without consent it sends
+// cookieless pings only. Call once on app start.
+export const initAnalytics = () => {
+  if (analyticsLoaded) return;
+  analyticsLoaded = true;
+
+  const state = hasTrackingConsent() ? "granted" : "denied";
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () {
+    window.dataLayer.push(arguments);
+  };
+  window.gtag("consent", "default", {
+    analytics_storage: state,
+    ad_storage: state,
+    ad_user_data: state,
+    ad_personalization: state,
+  });
+  window.gtag("js", new Date());
+  window.gtag("config", GA_ID);
+  addScript(`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`);
+};
+
+// Third-party tracking and advertising scripts. Call only after the visitor
 // has accepted cookies; withdrawing consent reloads the page (see AppFooter).
 export const loadTracking = () => {
   if (loaded) return;
   loaded = true;
 
-  // Google Analytics
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = function () {
-    window.dataLayer.push(arguments);
-  };
-  window.gtag("js", new Date());
-  window.gtag("config", GA_ID);
-  addScript(`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`);
+  if (window.gtag) {
+    window.gtag("consent", "update", {
+      analytics_storage: "granted",
+      ad_storage: "granted",
+      ad_user_data: "granted",
+      ad_personalization: "granted",
+    });
+  }
 
   // trafic.ro
   window.t_rid = TRAFIC_ID;

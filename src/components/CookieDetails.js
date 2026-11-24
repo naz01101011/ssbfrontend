@@ -9,7 +9,8 @@ const CookieDetails = () => (
         <p>
             Cookie-urile și scripturile de statistică și publicitate se activează
             <b> doar după ce apeși „Accept”</b> în bannerul de cookie-uri. Dacă apeși
-            „Refuz”, ele nu se încarcă, iar site-ul poate fi citit în continuare
+            „Refuz”, ele nu se încarcă (cu excepția Google Analytics, care rulează
+            fără cookie-uri, doar cu date tehnice anonime), iar site-ul poate fi citit în continuare
             integral. Alegerea ta este salvată pentru 1 an.
         </p>
 
@@ -30,8 +31,9 @@ const CookieDetails = () => (
         <h5>Active doar după „Accept”</h5>
         <ul style={{ marginLeft: '1em' }}>
             <li style={{ listStyleType: 'initial', margin: '0.5em 0' }}>
-                <b>Google Analytics</b> (Google) – statistici despre utilizarea
-                site-ului: paginile vizitate, durata vizitei, proveniența vizitatorilor.
+                <b>Google Analytics</b> (Google) – cookie-uri pentru statistici despre
+                utilizarea site-ului: paginile vizitate, durata vizitei, proveniența
+                vizitatorilor. Fără „Accept”, rulează în mod fără cookie-uri.
             </li>
             <li style={{ listStyleType: 'initial', margin: '0.5em 0' }}>
                 <b>trafic.ro</b> – măsurarea audienței și clasamentele site-urilor
