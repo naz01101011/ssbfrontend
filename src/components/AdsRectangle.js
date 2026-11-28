@@ -18,25 +18,29 @@ const Rectangle = () => {
     const googleAds = consent && (
         <>
             <span className='adlabel left-align'>Publicitate Google</span>
-            <ErrorBoundary>
-                <AdSense.Google
-                    client='ca-pub-2723789094037700'
-                    slot='4430780933'
-                    format='auto'
-                    style={{ display: 'block' }}
-                    responsive='true'
-                />
-            </ErrorBoundary>
+            <div className='adslot'>
+                <ErrorBoundary>
+                    <AdSense.Google
+                        client='ca-pub-2723789094037700'
+                        slot='4430780933'
+                        format='auto'
+                        style={{ display: 'block' }}
+                        responsive='true'
+                    />
+                </ErrorBoundary>
+            </div>
             <br />
-            <ErrorBoundary>
-                <AdSense.Google
-                    client='ca-pub-2723789094037700'
-                    slot='7132965898'
-                    format='auto'
-                    style={{ display: 'block' }}
-                    responsive='true'
-                />
-            </ErrorBoundary>
+            <div className='adslot'>
+                <ErrorBoundary>
+                    <AdSense.Google
+                        client='ca-pub-2723789094037700'
+                        slot='7132965898'
+                        format='auto'
+                        style={{ display: 'block' }}
+                        responsive='true'
+                    />
+                </ErrorBoundary>
+            </div>
         </>
     );
 

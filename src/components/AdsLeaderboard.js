@@ -19,7 +19,7 @@ const Leaderboard = (props) => {
                 <span className='adlabel left-align black-text'>Publicitate</span>
                 <div>
                     <a href={currentBanner.url} target='_blank' rel="noopener noreferrer">
-                        <img className='responsive-img' src={urlFor(currentBanner.bannerImg).width(728).height(90).url()} id={currentBanner._id} alt='leaderboard' />
+                        <img className='responsive-img' src={urlFor(currentBanner.bannerImg).width(728).height(90).url()} width={728} height={90} id={currentBanner._id} alt='leaderboard' />
                     </a>
                 </div>
             </div>

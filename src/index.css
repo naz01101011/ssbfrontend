@@ -15,6 +15,9 @@ body {
 
 main {
   flex: 1 0 auto;
+  /* Reserve a full viewport while data loads so the footer doesn't paint
+     near the top and then get pushed down (main source of mobile CLS). */
+  min-height: 100vh;
 }
 
 code {
@@ -74,6 +77,12 @@ nav {
 
 .adcontainer {
   padding: 3px 0;
+}
+
+/* Reserve space for responsive AdSense units so they don't push content
+   down when they fill. */
+.adslot {
+  min-height: 250px;
 }
 
 .flex {
